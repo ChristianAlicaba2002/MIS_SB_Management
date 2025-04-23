@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;500&display=swap');
+
+
+body {
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, white, #f57dad7e);
+}
+span{
+    margin-top: -1rem;
+    text-align: center;
+    font-size: 15px;
+    color: red;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 1em;
+    background: linear-gradient(to right, #F77062, #FE5196);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h3 {
+    text-align: center;
+    color: gray;
+    font-size: medium;
+    margin-top: -2em;
+}
+
+.form-controller {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid #FE5196;
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.658);
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: rgba(221, 86, 154, 0.815);
+    font-weight: 600;
+}
+
+label:nth-child(3)
+{
+    cursor: pointer;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 1rem 0.75rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #FE5196;
+    border-radius: 30px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: hotpink;
+    box-shadow: 0 0 5px rgba(254, 81, 150, 0.5);
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(to right, #F77062, #FE5196);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button[type="submit"]:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(254, 81, 150, 0.3);
+}

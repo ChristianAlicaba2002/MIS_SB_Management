@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('invoice', function (Blueprint $table) {
             $table->id('invoice_number');
             $table->unsignedBigInteger('order_id');
-            $table->foreign('order_id')->references('ordercode')->on('order')->onDelete('cascade');
+            $table->foreign('order_id')->references('ordercode')->on('orders')->onDelete('cascade');
             $table->decimal('total_amount', 10, 2);
             $table->timestamps();
         });
