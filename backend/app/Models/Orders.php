@@ -10,8 +10,7 @@ class Orders extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
       'product_id',
-      'total_price',
-      'date'
+      'total_price'
     ];
 
     public function products(){
