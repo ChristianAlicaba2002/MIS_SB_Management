@@ -1,18 +1,16 @@
 "use client";
 import Sidebar from "@/app/Application/Components/Sidebar";
 import Image from "next/image";
-
+import FetchAPI from "@/app/hooks/GetRequest";
+import { TProductProps } from "@/app/Types/AllTypes";
+import Link from "next/link";
 const ProductCard = ({
   imageUrl,
   title,
-  description,
-  sizes,
   price,
 }: {
   imageUrl: string;
   title: string;
-  description: string;
-  sizes: string[] | string | null;
   price: number | string;
 }) => {
   return (
@@ -30,15 +28,14 @@ const ProductCard = ({
       </div>
       <div className="mt-20 text-center">
         <h2 className="text-xl font-semibold text-pink-700">{title}</h2>
-        <p className="text-lg text-pink-500">{description}</p>
-        <p className="text-lg text-gray-500">{sizes}</p>
-        <p className="text-2xl font-bold mt-3 text-pink-700">&#8369;{price}</p>
+        <p className="text-2xl font-bold mt-3 text-red-700">&#8369;{price}</p>
       </div>
     </div>
   );
 };
 
 const Menu = () => {
+  const { getData } = FetchAPI("http://127.0.0.1:8000/api/products");
 
   return (
     <div className="flex bg-white">
@@ -56,6 +53,8 @@ const Menu = () => {
               src="/img/shaved-icee.png"
               alt="Ice Scramble"
               className="w-12 h-12 object-contain"
+              width={50}
+              height={30}
             />
             <span className="font-playfair text-lg">Scramble</span>
           </a>
@@ -67,6 +66,8 @@ const Menu = () => {
               src="/img/shake.png"
               alt="Shakes"
               className="w-12 h-12 object-contain"
+              width={50}
+              height={30}
             />
             <span className="font-playfair text-lg">Shakes</span>
           </a>
@@ -78,6 +79,8 @@ const Menu = () => {
               src="/img/drink.png"
               alt="Drinks"
               className="w-12 h-12 object-contain"
+              width={50}
+              height={30}
             />
             <span className="font-playfair text-lg">Drinks</span>
           </a>
@@ -89,6 +92,8 @@ const Menu = () => {
               src="/img/bites.png"
               alt="Bites"
               className="w-12 h-12 object-contain"
+              width={50}
+              height={30}
             />
             <span className="font-playfair text-lg">Bites</span>
           </a>
@@ -110,7 +115,20 @@ const Menu = () => {
             Ice Scramble ❄༄.°
           </h2>
           <main className="mx-auto w-[95%] flex flex-wrap justify-center gap-20 ">
-      
+            {getData
+              .filter((items: TProductProps) => items.Category == "Scramble")
+              .map((item: TProductProps) => {
+                const imageURL = `http://127.0.0.1:8000/api/storage/${item.Image}`;
+                return (
+                  <div key={item.Itemcode}>
+                    <ProductCard
+                      imageUrl={imageURL}
+                      title={item.Item_Name}
+                      price={item.Unit_Price}
+                    />
+                  </div>
+                );
+              })}
           </main>
         </section>
 
@@ -120,7 +138,21 @@ const Menu = () => {
             Shakes ❄༄.°
           </h2>
           <main className="mx-auto w-[95%] flex flex-wrap justify-center gap-20">
-            
+            {getData
+              .filter((items: TProductProps) => items.Category == "Shakes")
+              .map((item: TProductProps) => {
+                const imageURL = `http://127.0.0.1:8000/api/storage/${item.Image}`;
+                return (
+                  <div key={item.Itemcode}>
+                    <ProductCard
+                      imageUrl={imageURL}
+                      title={item.Item_Name}
+                      price={item.Unit_Price}
+                    />
+                    <Link href={``} />
+                  </div>
+                );
+              })}
           </main>
         </section>
 
@@ -130,7 +162,21 @@ const Menu = () => {
             Refreshing Drinks ❄༄.°
           </h2>
           <main className="mx-auto w-[95%] flex flex-wrap justify-center gap-20">
-           
+          {getData
+              .filter((items: TProductProps) => items.Category == "Drink")
+              .map((item: TProductProps) => {
+                const imageURL = `http://127.0.0.1:8000/api/storage/${item.Image}`;
+                return (
+                  <div key={item.Itemcode}>
+                    <ProductCard
+                      imageUrl={imageURL}
+                      title={item.Item_Name}
+                      price={item.Unit_Price}
+                    />
+                    <Link href={``} />
+                  </div>
+                );
+              })}
           </main>
         </section>
 
@@ -139,7 +185,21 @@ const Menu = () => {
             Sweet Bites ❄༄.°
           </h2>
           <main className="mx-auto w-[95%] flex flex-wrap justify-center gap-20">
-            
+          {getData
+              .filter((items: TProductProps) => items.Category == "Bites")
+              .map((item: TProductProps) => {
+                const imageURL = `http://127.0.0.1:8000/api/storage/${item.Image}`;
+                return (
+                  <div key={item.Itemcode}>
+                    <ProductCard
+                      imageUrl={imageURL}
+                      title={item.Item_Name}
+                      price={item.Unit_Price}
+                    />
+                    <Link href={``} />
+                  </div>
+                );
+              })}
           </main>
         </section>
       </div>
