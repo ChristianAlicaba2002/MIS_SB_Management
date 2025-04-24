@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "@/app/Application/Components/Sidebar";
 import Image from "next/image";
-import { TProductProps } from "@/app/Types/AllTypes";
+
 
 const products = [
   {
@@ -24,22 +24,6 @@ const products = [
 ];
 
 const MainPage = () => {
-  const [product, setProduct] = useState<[]>([]);
-
-  useEffect(() => {
-    const fethData = async () => {
-      const response = await fetch("http://127.0.0.1:8000/api/scramble");
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch: ${response.status}`);
-      }
-      const product = await response.json();
-      console.log(product.data);
-      setProduct(product.data);
-    };
-
-    fethData();
-  }, []);
 
   return (
     <>
@@ -54,26 +38,26 @@ const MainPage = () => {
             People's Top Favorite ⋆｡‧˚❆☃️❆˚‧｡⋆
           </h2>
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4 md:px-10">
-            {product.length > 1 ? product
-              .filter((product: TProductProps) => product.Unit_Price >= 30)
-              .map((item: TProductProps) => {
+            {products.length > 1 ? products
+              .filter((product) => product.Unit_Price >= 30)
+              .map((item) => {
                 return (
                   <div
-                    key={item.Itemcode}
+                    key={item.name}
                     className=" bg-gradient-to-br from-[#FFF0E6] to-[#FFF3F5] shadow-pink-200 rounded-3xl shadow-md hover:shadow-pink-400 transition duration-300 p-4 text-center hover:scale-105"
                   >
                     <Image
-                      src={`http://127.0.0.1:8000/api/storage/${item.Image}`}
-                      alt={item.Item_Name}
+                      src={`http://127.0.0.1:8000/api/storage/${item.image}`}
+                      alt={item.name}
                       width={150}
                       height={100}
                       className="rounded-2xl mx-auto mb-4"
                     />
                     <h3 className="text-lg font-bold text-[#FE5196]">
-                      {item.Item_Name}
+                      {item.name}
                     </h3>
                     <p className="text-lg font-bold text-gray-500">
-                      {item.Unit_Price}
+                      {item.price}
                     </p>
                   </div>
                 );
