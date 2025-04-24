@@ -71,14 +71,14 @@ class ProductsController extends Controller
             $itemCode = $this->generateRandomItemCode();
         }
 
-        if ($request->hasFile('Image')) {
-            $image = $request->file('Image');
-            $destinationPath = 'images';
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $imageName);
-        } else {
-            $imageName = 'default.jpg';
+        if($request->hasFile('Image')) {
+            $file = $request->file('Image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $data['Image'] = $filename;
         }
+
+        
 
         $result = $this->registerProduct->create(
             $itemCode,
@@ -87,14 +87,10 @@ class ProductsController extends Controller
             $request->Category,
             $request->Unit_Price,
             $request->Quantity,
-            $request->Image
+            $data['Image']
         );
 
-        return Response()->json([
-            'status' => true,
-            'message' => 'Created Successfully',
-            'data' => $result
-        ]);
+        return redirect()->route('products')->with('success' , 'Product Created Successfully');
     }
 
     public function update(Request $request, int $Itemcode)
@@ -111,7 +107,7 @@ class ProductsController extends Controller
         $sanitized = array_map('trim', $request->all());
 
         $validator = Validator::make($sanitized, [
-            'Item_Name' => 'required|string|min:5|max:255',
+            'Item_Name' => 'required|string|min:1|max:255',
             'Description' => 'required|string|min:5|max:255',
             'Category' => 'required|string|min:5|max:50',
             'Unit_Price' => 'required|numeric',
@@ -119,28 +115,32 @@ class ProductsController extends Controller
             'Image' => 'required|nullable'
         ]);
 
+
         if ($validator->fails()) {
-            return Response()->json([
-                'status' => false,
-                'message' => $validator->errors(),
-            ]);
+            return redirect()->route('products')->with('error' , $validator->errors());
         }
 
-        $updateItem = $this->registerProduct->update(
-            $item->Itemcode,
-            $request->Item_Name,
-            $request->Description,
-            $request->Category,
-            $request->Unit_Price,
-            $request->Quantity,
-            $request->Image
-        );
+        $data = [
+            'Item_Name' => $request->Item_Name,
+            'Description' => $request->Description,
+            'Category' => $request->Category,
+            'Unit_Price' => $request->Unit_Price,
+            'Quantity' => $request->Quantity,
+            'Image' => $item->Image
+        ];
 
-        return Response()->json([
-            'status' => true,
-            'message' => 'Update Successully',
-            'data' => $updateItem,
-        ]);
+        if ($request->hasFile('Image')) {
+            $image = $request->file('Image');
+            $destinationPath = 'images';
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $imageName);
+            $data['Image'] = $imageName;
+        }
+
+        DB::table('products')->where('Itemcode', $Itemcode)->update($data);
+
+        return redirect()->route('products')->with('success', 'Updated Product Successfully');
+
     }
 
     public function archive(int $Itemcode)
@@ -167,7 +167,7 @@ class ProductsController extends Controller
             'Image' => $item->Image,
         ]);
 
-        return Response()->json(['status' => true, 'message' => 'Archived item successfully']);
+        return redirect()->route('products')->with('success' , 'Archived Created Successfully');
     }
 
     public function restore(int $Itemcode)
@@ -193,12 +193,12 @@ class ProductsController extends Controller
             'Image' => $item->Image,
         ]);
 
-        return Response()->json(['status' => true, 'message' => 'Restore item successfully']);
+        return redirect()->route('archive-products')->with('success' , 'Restore Product Successfully');
     }
 
     public function delete(int $Itemcode)
     {
-        $item = Products::where('Itemcode', $Itemcode)->first();
+        $item = ArchiveProducts::where('Itemcode', $Itemcode)->first();
 
         if (!$item) {
             return Response()->json([
@@ -207,9 +207,9 @@ class ProductsController extends Controller
             ]);
         }
 
-        $this->registerProduct->delete($Itemcode);
-
-        return Response()->json(['status' => true, 'message' => 'Delete item successfully']);
+        DB::table('archive_products')->where('Itemcode' , $Itemcode)->delete();
+    
+        return redirect()->route('archive-products')->with('success' , 'Deleted Successfully Created');
     }
 
     public function generateRandomItemCode()
