@@ -52,7 +52,7 @@ const Menu = () => {
             href="#icecream"
             className="hover:scale-110 transition-transform flex flex-col items-center gap-2"
           >
-            <img
+            <Image
               src="/img/shaved-icee.png"
               alt="Ice Scramble"
               className="w-12 h-12 object-contain"
@@ -63,7 +63,7 @@ const Menu = () => {
             href="#shakes"
             className="hover:scale-110 transition-transform flex flex-col items-center gap-2"
           >
-            <img
+            <Image
               src="/img/shake.png"
               alt="Shakes"
               className="w-12 h-12 object-contain"
@@ -74,7 +74,7 @@ const Menu = () => {
             href="#drinks"
             className="hover:scale-110 transition-transform flex flex-col items-center gap-2"
           >
-            <img
+            <Image
               src="/img/drink.png"
               alt="Drinks"
               className="w-12 h-12 object-contain"
@@ -85,7 +85,7 @@ const Menu = () => {
             href="#bites"
             className="hover:scale-110 transition-transform flex flex-col items-center gap-2"
           >
-            <img
+            <Image
               src="/img/bites.png"
               alt="Bites"
               className="w-12 h-12 object-contain"
