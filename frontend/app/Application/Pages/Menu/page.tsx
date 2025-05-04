@@ -34,18 +34,16 @@ const ProductCard = ({
   </div>
 );
 
-const Categories = [
-  {id:1 , catogorey:'Scramble'},
-  {id:2 , catogorey:'Shakes'},
-  {id:3 , catogorey:'Drink'},
-  {id:4 , catogorey:'Bites'},
-]
-
-
-
 const Menu = () => {
   const { getData } = FetchAPI("http://127.0.0.1:8000/api/products");
-  console.log(getData)
+  console.log(getData);
+
+  const Categories = [
+    { id: 1, category: "Scramble" },
+    { id: 2, category: "Shakes" },
+    { id: 3, category: "Drink" },
+    { id: 4, category: "Bites" },
+  ]
 
   return (
     <div className="flex min-h-screen">
@@ -55,44 +53,113 @@ const Menu = () => {
 
       <main className="flex-grow flex flex-col h-screen">
         <header className="sticky top-0 z-30 bg-white py-6 px-4 sm:px-8">
-          <h1 className="text-4xl sm:text-5xl font-bold text-pink-500 mb-4">MENU</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold text-pink-500 mb-4">
+            MENU
+          </h1>
           <nav className="flex gap-3 sm:gap-6 overflow-x-auto">
-          {Categories.map((item)=> {
-            return (
-              <a
-              key={item.id}
-              href={`#${decodeURIComponent(item.catogorey)}`}
-              className="py-2 px-4 sm:px-5 border rounded-full bg-white font-bold text-pink-400 hover:bg-gradient-to-r from-[#FE5196] to-[#F77062] hover:text-white transition-colors"
-            >
-              {item.catogorey}
-            </a>
-            )
-              
-          })}
+            {Categories.map((item) => {
+              return (
+                <a
+                  key={item.id}
+                  href={`#${decodeURIComponent(item.category)}`}
+                  className="py-2 px-4 sm:px-5 border rounded-full bg-white font-bold text-pink-400 hover:bg-gradient-to-r from-[#FE5196] to-[#F77062] hover:text-white transition-colors"
+                >
+                  {item.category}
+                </a>
+              );
+            })}
           </nav>
         </header>
 
         <section className="flex-1 overflow-y-auto bg-white px-4 sm:px-8 py-8 space-y-20">
-          {getData.map((item:TProductProps)=> {
-            getData.filter((product:TProductProps) => product.Category?.toLowerCase() === item.Category.toLowerCase());
-             return (
-               <div key={item.Itemcode} id={item.Category} >
-                 <h2 className="text-2xl font-bold text-pink-500 mb-6 text-left">{item.Item_Name}</h2>
-                 <div className="flex flex-wrap gap-6">
-                 <ProductCard
-                       key={item.Itemcode}
-                       imageUrl={`http://127.0.0.1:8000/api/storage/${item.Image}`}
-                       name={item.Item_Name}
-                       description={item.Description}
-                       size={item.Item_Name}
-                       price={item.Unit_Price}
-                     />
-                 </div>
-               </div>
-             );
-          })}
+          {getData
+            .filter((product: TProductProps) => product.Category === "Scramble")
+            .map((product: TProductProps) => {
+              return (
+                <div key={product.Itemcode} id={product.Category}>
+                  <h2 className="text-2xl font-bold text-pink-500 mb-6 text-left">
+                    {product.Item_Name}
+                  </h2>
+                  <div className="flex flex-wrap gap-6">
+                    <ProductCard
+                      key={product.Itemcode}
+                      imageUrl={`http://127.0.0.1:8000/api/storage/${product.Image}`}
+                      name={product.Item_Name}
+                      description={product.Description}
+                      size={''}
+                      price={product.Unit_Price}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+
+          {getData
+            .filter((product: TProductProps) => product.Category === "Shakes")
+            .map((product: TProductProps) => {
+              return (
+                <div key={product.Itemcode} id={product.Category}>
+                  <h2 className="text-2xl font-bold text-pink-500 mb-6 text-left">
+                    {product.Item_Name}
+                  </h2>
+                  <div className="flex flex-wrap gap-6">
+                    <ProductCard
+                      key={product.Itemcode}
+                      imageUrl={`http://127.0.0.1:8000/api/storage/${product.Image}`}
+                      name={product.Item_Name}
+                      description={product.Description}
+                      size={product.Item_Name}
+                      price={product.Unit_Price}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+
+          {getData
+            .filter((product: TProductProps) => product.Category === "Drink")
+            .map((product: TProductProps) => {
+              return (
+                <div key={product.Itemcode} id={product.Category}>
+                  <h2 className="text-2xl font-bold text-pink-500 mb-6 text-left">
+                    {product.Item_Name}
+                  </h2>
+                  <div className="flex flex-wrap gap-6">
+                    <ProductCard
+                      key={product.Itemcode}
+                      imageUrl={`http://127.0.0.1:8000/api/storage/${product.Image}`}
+                      name={product.Item_Name}
+                      description={product.Description}
+                      size={product.Item_Name}
+                      price={product.Unit_Price}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+
+          {getData
+            .filter((product: TProductProps) => product.Category === "Bites")
+            .map((product: TProductProps) => {
+              return (
+                <div key={product.Itemcode} id={product.Category}>
+                  <h2 className="text-2xl font-bold text-pink-500 mb-6 text-left">
+                    {product.Item_Name}
+                  </h2>
+                  <div className="flex flex-wrap gap-6">
+                    <ProductCard
+                      key={product.Itemcode}
+                      imageUrl={`http://127.0.0.1:8000/api/storage/${product.Image}`}
+                      name={product.Item_Name}
+                      description={product.Description}
+                      size={product.Item_Name}
+                      price={product.Unit_Price}
+                    />
+                  </div>
+                </div>
+              );
+            })}
         </section>
-        
       </main>
     </div>
   );
