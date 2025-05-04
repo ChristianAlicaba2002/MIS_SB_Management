@@ -1,208 +1,142 @@
 "use client";
 import Sidebar from "@/app/Application/Components/Sidebar";
-import Image from "next/image";
 import FetchAPI from "@/app/hooks/GetRequest";
 import { TProductProps } from "@/app/Types/AllTypes";
-import Link from "next/link";
+
+const categories = [
+  { id: "scramble", label: "Scramble" },
+  { id: "shakes", label: "Shakes" },
+  { id: "drinks", label: "Drinks" },
+  { id: "bites", label: "Bites" },
+];
+
 const ProductCard = ({
   imageUrl,
-  title,
+  name,
+  description,
+  size,
   price,
 }: {
   imageUrl: string;
-  title: string;
-  price: number | string;
-}) => {
-  return (
-    <div className="rounded-lg p-8 flex flex-col items-center justify-start relative bg-white w-fit shadow-pink-300 shadow-md">
-      <div className="w-32 h-32 rounded-full flex items-center justify-center absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4 bg-white border-1 border-pink-300 shadow-pink-400 shadow">
-        <div
-          className="w-full h-full rounded-full overflow-hidden p-1"
-          style={{
-            backgroundImage: `url(${imageUrl})`,
-            backgroundSize: "contain",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-        />
-      </div>
-      <div className="mt-20 text-center">
-        <h2 className="text-xl font-semibold text-pink-700">{title}</h2>
-        <p className="text-2xl font-bold mt-3 text-red-700">&#8369;{price}</p>
-      </div>
+  name: string;
+  description?: string;
+  size: string;
+  price: number;
+}) => (
+  <div className="rounded-lg p-6 flex items-center bg-gradient-to-r from-[#FE5196] to-[#F77062] border border-pink-200 w-fit">
+    <div
+      className="w-24 h-24 rounded-full overflow-hidden mr-4"
+      style={{
+        backgroundImage: `url(${imageUrl})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    />
+    <div className="flex flex-col">
+      <h2 className="text-lg font-semibold text-white">{name}</h2>
+      {description && <p className="text-sm text-white mt-1">{description}</p>}
+      <p className="text-sm text-white mt-1">Size: {size}</p>
+      <p className="text-md font-semibold text-white mt-2">₱{price}</p>
     </div>
-  );
-};
+  </div>
+);
 
 const Menu = () => {
   const { getData } = FetchAPI("http://127.0.0.1:8000/api/products");
 
   return (
-    <div className="flex bg-white">
-      <aside>
+    <div className="flex min-h-screen">
+      <aside className="mr-20 w-1/8">
         <Sidebar />
       </aside>
 
-      <div className="flex-grow bg-white">
-        <nav className="sticky top-0 z-50 bg-gradient-to-r from-[#F77062]/40 to-[#FE5196]/90 text-white shadow-md py-2 px-0 w-[70%] mx-auto flex justify-around items-center text-xl font-bold rounded-b-3xl shadow-pink-300">
-          <a
-            href="#icecream"
-            className="hover:scale-110 transition-transform flex flex-col items-center gap-2"
-          >
-            <Image
-              src="/img/shaved-icee.png"
-              alt="Ice Scramble"
-              className="w-12 h-12 object-contain"
-              width={50}
-              height={30}
-            />
-            <span className="font-playfair text-lg">Scramble</span>
-          </a>
-          <a
-            href="#shakes"
-            className="hover:scale-110 transition-transform flex flex-col items-center gap-2"
-          >
-            <Image
-              src="/img/shake.png"
-              alt="Shakes"
-              className="w-12 h-12 object-contain"
-              width={50}
-              height={30}
-            />
-            <span className="font-playfair text-lg">Shakes</span>
-          </a>
-          <a
-            href="#drinks"
-            className="hover:scale-110 transition-transform flex flex-col items-center gap-2"
-          >
-            <Image
-              src="/img/drink.png"
-              alt="Drinks"
-              className="w-12 h-12 object-contain"
-              width={50}
-              height={30}
-            />
-            <span className="font-playfair text-lg">Drinks</span>
-          </a>
-          <a
-            href="#bites"
-            className="hover:scale-110 transition-transform flex flex-col items-center gap-2"
-          >
-            <Image
-              src="/img/bites.png"
-              alt="Bites"
-              className="w-12 h-12 object-contain"
-              width={50}
-              height={30}
-            />
-            <span className="font-playfair text-lg">Bites</span>
-          </a>
-        </nav>
+      <main className="flex-grow flex flex-col h-screen">
+        <header className="sticky top-0 z-30 bg-white py-6 px-4 sm:px-8">
+          <h1 className="text-4xl sm:text-5xl font-bold text-pink-500 mb-4">MENU</h1>
+          <nav className="flex gap-3 sm:gap-6 overflow-x-auto">
+            {categories.map(({ id, label }) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                className="py-2 px-4 sm:px-5 border rounded-full bg-white font-bold text-pink-400 hover:bg-gradient-to-r from-[#FE5196] to-[#F77062] hover:text-white transition-colors"
+              >
+                {label}
+              </a>
+            ))}
+          </nav>
+        </header>
 
-        <div className="text-center py-40 px-8 ">
-          <h1 className="text-center text-7xl font-playfair font-black bg-gradient-to-br from-[#F77062] to-[#FE5196] text-transparent bg-clip-text shadow-pink-800">
-            ⋆꙳•̩̩͙❅*̩̩͙‧͙ Sweet Delights ‧͙*̩̩͙❆ ͙͛ ˚₊⋆
-          </h1>
-          <p className="mt-8 text-xl text-pink-600">
-            Indulge in our delightful selection of frozen treats, rich shakes,
-            refreshing drinks, and sweet bites!
-          </p>
-        </div>
-
-        {/* Ice Scramble Section */}
-        <section id="icecream" className="py-40 px-8">
-          <h2 className="text-6xl font-playfair font-bold mb-12 text-center text-pink-700 ">
-            Ice Scramble ❄༄.°
-          </h2>
-          <main className="mx-auto w-[95%] flex flex-wrap justify-center gap-20 ">
-            {getData
-              .filter((items: TProductProps) => items.Category == "Scramble")
-              .map((item: TProductProps) => {
-                const imageURL = `http://127.0.0.1:8000/api/storage/${item.Image}`;
-                return (
-                  <div key={item.Itemcode}>
+        <section className="flex-1 overflow-y-auto bg-white px-4 sm:px-8 py-8 space-y-20">
+          {categories.map(({ id, label }) => {
+            const filteredItems = getData.filter((item: TProductProps) => item.Category?.toLowerCase() === label.toLowerCase());
+            return (
+              <div key={id} id={id}>
+                <h2 className="text-2xl font-bold text-pink-500 mb-6 text-left">{label}</h2>
+                <div className="flex flex-wrap gap-6">
+                {id === "scramble" && (
+                  <ProductCard
+                    imageUrl="/img/Ube.png"
+                    name="Ube Scramble"
+                    description="Creamy ube-flavored delight topped with powdered milk and marshmallows."
+                    size="Regular"
+                    price={25}
+                  />
+                  
+                )}
+                {id === "scramble" && (
+                  <ProductCard
+                    imageUrl="/img/Ube.png"
+                    name="Ube Scramble"
+                    description="Creamy ube-flavored delight topped with powdered milk and marshmallows."
+                    size="Regular"
+                    price={25}
+                  />
+                  
+                )}
+                {id === "scramble" && (
+                  <ProductCard
+                    imageUrl="/img/Ube.png"
+                    name="Ube Scramble"
+                    description="Creamy ube-flavored delight topped with powdered milk and marshmallows."
+                    size="Regular"
+                    price={25}
+                  />                 
+                )}
+                {id === "shakes" && (
+                  <ProductCard
+                    imageUrl="/img/Ube.png"
+                    name="Ube Scramble"
+                    description="Creamy ube-flavored delight topped with powdered milk and marshmallows."
+                    size="Regular"
+                    price={25}
+                  />    
+                )}
+                {id === "bites" && (
+                  <ProductCard
+                    imageUrl="/img/Ube.png"
+                    name="Ube Scramble"
+                    description="Creamy ube-flavored delight topped with powdered milk and marshmallows."
+                    size="Regular"
+                    price={25}
+                  />
+                  
+                )}
+                  {filteredItems.map((item: TProductProps) => (
                     <ProductCard
-                      imageUrl={imageURL}
-                      title={item.Item_Name}
+                      key={item.Itemcode}
+                      imageUrl={`http://127.0.0.1:8000/api/storage/${item.Image}`}
+                      name={item.Item_Name}
+                      description={item.Description}
+                      size={item.Item_Name}
                       price={item.Unit_Price}
                     />
-                  </div>
-                );
-              })}
-          </main>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </section>
-
-        {/* Shakes Section */}
-        <section id="shakes" className="py-40 px-8">
-          <h2 className="text-6xl font-playfair font-bold mb-12 text-center text-pink-700">
-            Shakes ❄༄.°
-          </h2>
-          <main className="mx-auto w-[95%] flex flex-wrap justify-center gap-20">
-            {getData
-              .filter((items: TProductProps) => items.Category == "Shakes")
-              .map((item: TProductProps) => {
-                const imageURL = `http://127.0.0.1:8000/api/storage/${item.Image}`;
-                return (
-                  <div key={item.Itemcode}>
-                    <ProductCard
-                      imageUrl={imageURL}
-                      title={item.Item_Name}
-                      price={item.Unit_Price}
-                    />
-                    <Link href={``} />
-                  </div>
-                );
-              })}
-          </main>
-        </section>
-
-        {/* Drinks Section */}
-        <section id="drinks" className="py-40 px-8">
-          <h2 className="text-6xl font-playfair font-bold mb-12 text-center text-pink-700">
-            Refreshing Drinks ❄༄.°
-          </h2>
-          <main className="mx-auto w-[95%] flex flex-wrap justify-center gap-20">
-          {getData
-              .filter((items: TProductProps) => items.Category == "Drink")
-              .map((item: TProductProps) => {
-                const imageURL = `http://127.0.0.1:8000/api/storage/${item.Image}`;
-                return (
-                  <div key={item.Itemcode}>
-                    <ProductCard
-                      imageUrl={imageURL}
-                      title={item.Item_Name}
-                      price={item.Unit_Price}
-                    />
-                    <Link href={``} />
-                  </div>
-                );
-              })}
-          </main>
-        </section>
-
-        <section id="bites" className="py-24 px-8">
-          <h2 className="text-6xl font-playfair font-bold mb-12 text-center text-pink-700">
-            Sweet Bites ❄༄.°
-          </h2>
-          <main className="mx-auto w-[95%] flex flex-wrap justify-center gap-20">
-          {getData
-              .filter((items: TProductProps) => items.Category == "Bites")
-              .map((item: TProductProps) => {
-                const imageURL = `http://127.0.0.1:8000/api/storage/${item.Image}`;
-                return (
-                  <div key={item.Itemcode}>
-                    <ProductCard
-                      imageUrl={imageURL}
-                      title={item.Item_Name}
-                      price={item.Unit_Price}
-                    />
-                    <Link href={``} />
-                  </div>
-                );
-              })}
-          </main>
-        </section>
-      </div>
+      </main>
     </div>
   );
 };
