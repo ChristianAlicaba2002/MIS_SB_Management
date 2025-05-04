@@ -38,10 +38,25 @@
 
         <li>
         <a href="">
+        <img src="/images/order.png" alt="">
+            <span class="nav-text">Orders</span>
+          </a>
+        </li>
+
+        <li>
+        <a href="">
+        <img src="/images/ingredients.png" alt="">
+            <span class="nav-text">Ingredients</span>
+          </a>
+        </li>
+
+        <li>
+        <a href="">
         <img src="/images/expenses.png" alt="">
             <span class="nav-text">Expenses</span>
           </a>
         </li>
+
       </ul>
     </div>
 
