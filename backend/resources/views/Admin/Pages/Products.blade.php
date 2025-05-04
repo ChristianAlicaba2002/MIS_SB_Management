@@ -161,7 +161,7 @@
         </div>
 
         <!-- Update Product Section -->
-        <div id="editProductForm" class="form-container" style="display: none; position:absolute; margin-top:-20%; width:50%; margin-left:15%;">
+        <div id="editProductForm" class="form-container" style="display: none; position:fixed; margin-top:3%; width:50%; margin-left:4%;">
             <h4 class="fas fa-edit mb-4"> Edit Product</h4>
             <form id="submitForm" method="post" class="row g-3" enctype="multipart/form-data">
                 @csrf
