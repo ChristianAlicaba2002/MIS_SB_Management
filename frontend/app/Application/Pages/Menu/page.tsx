@@ -34,6 +34,15 @@ const ProductCard = ({
   </div>
 );
 
+const Categories = [
+  {id:1 , catogorey:'Scramble'},
+  {id:2 , catogorey:'Shakes'},
+  {id:3 , catogorey:'Drink'},
+  {id:4 , catogorey:'Bites'},
+]
+
+
+
 const Menu = () => {
   const { getData } = FetchAPI("http://127.0.0.1:8000/api/products");
   console.log(getData)
@@ -48,14 +57,14 @@ const Menu = () => {
         <header className="sticky top-0 z-30 bg-white py-6 px-4 sm:px-8">
           <h1 className="text-4xl sm:text-5xl font-bold text-pink-500 mb-4">MENU</h1>
           <nav className="flex gap-3 sm:gap-6 overflow-x-auto">
-          {getData.map((item:TProductProps)=> {
+          {Categories.map((item)=> {
             return (
               <a
-              key={item.Itemcode}
-              href={`#${decodeURIComponent(item.Item_Name)}`}
+              key={item.id}
+              href={`#${decodeURIComponent(item.catogorey)}`}
               className="py-2 px-4 sm:px-5 border rounded-full bg-white font-bold text-pink-400 hover:bg-gradient-to-r from-[#FE5196] to-[#F77062] hover:text-white transition-colors"
             >
-              {item.Item_Name}
+              {item.catogorey}
             </a>
             )
               
@@ -67,7 +76,7 @@ const Menu = () => {
           {getData.map((item:TProductProps)=> {
             getData.filter((product:TProductProps) => product.Category?.toLowerCase() === item.Category.toLowerCase());
              return (
-               <div key={item.Itemcode} id={item.Item_Name} >
+               <div key={item.Itemcode} id={item.Category} >
                  <h2 className="text-2xl font-bold text-pink-500 mb-6 text-left">{item.Item_Name}</h2>
                  <div className="flex flex-wrap gap-6">
                  <ProductCard
