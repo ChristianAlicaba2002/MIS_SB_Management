@@ -73,23 +73,24 @@ const Menu = () => {
         </header>
 
         <section className="flex-1 overflow-y-auto bg-white px-4 sm:px-8 py-8 space-y-20">
-          {getData.map((item:TProductProps)=> {
-            getData.filter((product:TProductProps) => product.Category?.toLowerCase() === item.Category.toLowerCase());
-             return (
-               <div key={item.Itemcode} id={item.Category} >
-                 <h2 className="text-2xl font-bold text-pink-500 mb-6 text-left">{item.Item_Name}</h2>
-                 <div className="flex flex-wrap gap-6">
-                 <ProductCard
-                       key={item.Itemcode}
-                       imageUrl={`http://127.0.0.1:8000/api/storage/${item.Image}`}
-                       name={item.Item_Name}
-                       description={item.Description}
-                       size={item.Item_Name}
-                       price={item.Unit_Price}
-                     />
-                 </div>
-               </div>
-             );
+
+          {getData.filter((product:TProductProps) => product.Category != product.Category)
+          .map((product:TProductProps)=> {
+            return (
+              <div key={product.Itemcode} id={product.Category} >
+                <h2 className="text-2xl font-bold text-pink-500 mb-6 text-left">{product.Item_Name}</h2>
+                <div className="flex flex-wrap gap-6">
+                <ProductCard
+                      key={product.Itemcode}
+                      imageUrl={`http://127.0.0.1:8000/api/storage/${product.Image}`}
+                      name={product.Item_Name}
+                      description={product.Description}
+                      size={product.Item_Name}
+                      price={product.Unit_Price}
+                    />
+                </div>
+              </div>
+            )
           })}
         </section>
         
