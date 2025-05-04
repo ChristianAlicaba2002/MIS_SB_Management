@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MIS&SB Products</title>
     <link rel="stylesheet" href="{{asset('css/products.css')}}">
-    <link rel="shortcut icon" href="{{asset('assets/components/oop_logo.png')}}" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="shortcut icon" href="{{asset('/images/oop_logo.png')}}" type="image/x-icon">
 </head>
 
 <body>
@@ -31,10 +29,10 @@
             <h1 class="h3 mb-3">MIS & SB Product Management</h1>
             <div>
                 <button class="btn btn-primary" onclick="toggleForm('addProductForm')">
-                    <i class="fas fa-plus"></i> Add Product
+                    <img src="/images/add.png" alt=""> Add Product
                 </button>
                 <a href="{{route('archive-products')}}" class="btn btn-warning">
-                    <i class="fas fa-archive"></i> Archive
+                   <img src="/images/archives.png" alt=""> Archive
                 </a>
             </div>
         </div>
@@ -60,7 +58,6 @@
             @endif
         </section>
 
-        <!--Table Products-->
         <h1 id="categoryTitle">All Products</h1>
         <div class="table-responsive">
             <table class="table table-hover" id="productTable">
@@ -90,7 +87,7 @@
                         <td>{{ $product->Quantity }}</td>
                         <td>{{ $product->Description }}</td>
                         <td class="action-buttons">
-                            <button
+                            <button class="action"
                                 onclick="EditForm(
                                     '{{$product->Itemcode}}',
                                     '{{$product->Item_Name}}',
@@ -99,16 +96,15 @@
                                     '{{$product->Quantity}}',
                                     '{{$product->Description}}',
                                     '{{$product->Image}}')"
-
-                                class="btn btn-sm btn-success">
-                                <i class="fas fa-edit"></i> Edit
+                            >
+                            <img src="/images/edit.png" alt=""> Edit
                             </button>
 
                             <form action="{{ route('archive.item', $product->Itemcode) }}" method="post" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">
-                                    <i class="fas fa-archive"></i> Archive
+                                <button type="submit" class="action">
+                                    <img src="/images/archive.png" alt="">Archive
                                 </button>
                             </form>
                         </td>
@@ -123,9 +119,8 @@
             </table>
         </div>
 
-        <!-- Add Product Section -->
-        <div id="addProductForm" class="form-container">
-            <h4 class="fa fa-plus mb-4">Add New Product</h4>
+        <div id="addProductForm" class="add-form-container">
+            <h4>Add New Product</h4>
             <form action="{{route('create.item')}}" enctype="multipart/form-data" method="post" class="row g-3">
             @csrf
             <div class="col-md-6">
@@ -140,12 +135,12 @@
                 <label class="form-label">Category</label>
                 <input type="string" name="Category" class="form-control" required>
             </div>
-         
+
             <div class="col-md-6">
                 <label class="form-label">Quantity</label>
                 <input type="number" name="Quantity" class="form-control" required>
             </div>
-            <div class
+            <div class="col-md-6">
                     <label class="form-label">Description</label>
                     <input type="text" name="Description" class="form-control" required>
                 </div>
@@ -155,13 +150,13 @@
                     <img id="img3" src="" alt="" class="mt-2 product-img">
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Add Product</button>
+                    <button type="submit" class="add-button">Add Product</button>
+                    <button type="submit" class="cancel-button">Cancel</button>
                 </div>
             </form>
         </div>
 
-        <!-- Update Product Section -->
-        <div id="editProductForm" class="form-container" style="display: none; position:fixed; margin-top:3%; width:50%; margin-left:4%;">
+        <div id="editProductForm" class="edit-form-container" style="display: none; position:absolute; margin-top:-20%; width:50%; margin-left:15%;">
             <h4 class="fas fa-edit mb-4"> Edit Product</h4>
             <form id="submitForm" method="post" class="row g-3" enctype="multipart/form-data">
                 @csrf
@@ -201,20 +196,18 @@
                     <img id="editImage" src="" alt="Product Image" class="product-img mt-2">
                 </div>
 
-                <div class="col-12">
-                    <button type="submit" class="btn btn-success">
-                        <i class="fas fa-save"></i> Update Product
-                    </button>
-                    <button type="button" class="btn btn-secondary" onclick="toggleForm('editProductForm')">
-                        <i class="fas fa-times"></i> Cancel
-                    </button>
-                </div>
+                    <div class="col-12">
+                        <button type="submit" class="edit-button">
+                            Update Product
+                        </button>
+                        <button type="button" class="cancel-button" onclick="toggleForm('editProductForm')">
+                            Cancel
+                        </button>
+                    </div>
             </form>
         </div>
     </main>
 
-    <!-- Add Bootstrap JS and FontAwesome -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/your-code.js"></script>
     <script>
         function previewImage(event, imgId) {
@@ -258,7 +251,6 @@
 
             event.target.classList.add('active');
 
-            // Update the heading
             const categoryTitle = document.getElementById('categoryTitle');
             categoryTitle.textContent = category === 'all' ? 'All Products' : category;
 
