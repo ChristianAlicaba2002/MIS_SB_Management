@@ -6,14 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archive Products</title>
     <link rel="stylesheet" href="{{asset('css/archive-products.css')}}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
 <body class="bg-light">
     <div class="container mt-4">
         <a href="{{route('products')}}" class="back-link">
-            <i class="fas fa-arrow-left"></i> Back to products
+            <img src="/images/back.png" alt="Back Icon">
         </a>
 
         @if(session('success'))
@@ -21,6 +19,14 @@
             alert('{{session("success")}}')
         </script>
         @endif
+
+        <div class="title">
+            <div class="content">
+                <h1>ARCHIVES</h1>
+                    <p>Archived products are listed below to remain hidden from customers while preserving data
+                for sales analysis, inventory tracking, reactivation, and safe reference before permanent deletion.</p>
+            </div>
+        </div>
 
         <div class="table-responsive">
             <table class="table table-hover" id="productTable">
@@ -53,15 +59,15 @@
                             <form action="{{route('restore.item' , $archive->Itemcode)}}" method="post" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">
-                                    <i class="fas fa-archive"></i> Restore
+                                <button type="submit" class="restore-button">
+                                    <img src="/images/restore.png" alt="Restore Icon"> Restore
                                 </button>
                             </form>
                             <form action="{{route('delete.item', $archive->Itemcode)}}" method="post" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">
-                                    <i class="fas fa-trash"></i> Delete
+                                <button type="submit" class="delete-button">
+                                    <img src="/images/delete.png" alt="Delete Icon"> Delete
                                 </button>
                             </form>
                         </td>
@@ -77,8 +83,6 @@
         </div>
     </div>
 
-    <!-- Add Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
