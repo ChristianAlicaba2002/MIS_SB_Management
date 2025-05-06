@@ -58,6 +58,9 @@
 .sidebar-container li:hover {
     opacity: 1;
     transform: scale(1.06);
+    padding: 0.6rem 1rem;
+    border-radius: 40px;
+    width: 100%;
 }
 
 .sidebar-container li a,
