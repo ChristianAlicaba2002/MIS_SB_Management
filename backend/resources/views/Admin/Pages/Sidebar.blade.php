@@ -17,14 +17,14 @@
       <ul>
         <li>
             <a href="{{route('dashboard')}}">
-                <img src="assets/components/dashboard.png" alt="">
+                <img src="/images/dashboard.png" alt="">
             <span class="nav-text">Dashboard</span>
           </a>
         </li>
 
         <li>
             <a href="">
-                <img src="assets/components/sales.png" alt="">
+                <img src="/images/sales.png" alt="">
             <span class="nav-text">Sales</span>
           </a>
         </li>
