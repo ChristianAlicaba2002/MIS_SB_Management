@@ -14,7 +14,7 @@ const ProductCard = ({
   description?: string;
   price: number;
 }) => (
-  <div className="rounded-lg p-6 flex items-center bg-gradient-to-r from-[#FE5196] to-[#F77062] border border-pink-200 w-fit">
+  <div className="rounded-lg p-6 flex items-center bg-gradient-to-r from-[#FE5196] to-[#F77062] border border-pink-200 w-96">
     <div
       className="w-56 h-56 overflow-hidden mr-4"
       style={{
