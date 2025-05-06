@@ -79,24 +79,25 @@ const Sidebar = () => {
             className="group mb-6 flex flex-col items-center transition-all duration-300"
           >
             <div className="transition-all duration-300 group-hover:bg-white group-hover:shadow-md group-hover:rounded-full p-2">
-              <Image src="/img/back.png" alt="Back" width={30} height={30} className="transition-transform duration-300 group-hover:scale-110" />
+              <Image src="/img/logout.png" alt="Back" width={30} height={30} className="transition-transform duration-300 group-hover:scale-110" />
             </div>
             <span
               className={`text-sm font-medium mt-2 transition-all duration-300 transform ${
                 isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
               }`}
             >
-              Back
             </span>
           </Link>
         </div>
       </aside>
 
+
+      {/* Small Devices */}
       {isMenuOpen && (
         <aside className="md:hidden fixed top-0 left-0 h-full w-64 bg-white z-50 shadow-[0_4px_30px_rgba(255,192,203,0.6)] rounded-r-2xl flex flex-col items-start px-4 py-6 space-y-4 transition-all duration-500 ease-in-out">
           <button
             onClick={() => setIsMenuOpen(false)}
-            className="absolute top-4 right-4 bg-white/80 backdrop-blur-md rounded-md p-2 shadow-md z-50"
+            className="absolute top-4 right-4 p-2 z-50"
           >
             <Image src="/img/back.png" alt="Close" width={24} height={24} />
           </button>
@@ -134,9 +135,9 @@ const Sidebar = () => {
             className="flex items-center px-4 py-3 w-full rounded-md hover:bg-pink-200 text-pink-500 transition-all duration-300"
           >
             <div className="p-2 mr-3 group-hover:bg-white group-hover:rounded-md">
-              <Image src="/img/back.png" alt="Back" width={24} height={24} />
+              <Image src="/img/logout.png" alt="logout" width={24} height={24} />
             </div>
-            <span className="text-sm font-medium">Back</span>
+            <span className="text-sm font-medium"></span>
           </Link>
         </aside>
       )}
