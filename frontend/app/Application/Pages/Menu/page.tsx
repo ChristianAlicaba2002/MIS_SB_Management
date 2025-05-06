@@ -7,29 +7,28 @@ const ProductCard = ({
   imageUrl,
   name,
   description,
-  size,
   price,
 }: {
   imageUrl: string;
   name: string;
   description?: string;
-  size: string;
   price: number;
 }) => (
-  <div className="rounded-lg p-6 flex items-center bg-gradient-to-r from-[#FE5196] to-[#F77062] border border-pink-200 w-fit">
+  <div className="rounded-lg p-6 flex items-center bg-gradient-to-r from-[#FE5196] to-[#F77062] border border-pink-200 w-96">
     <div
-      className="w-24 h-24 rounded-full overflow-hidden mr-4"
+      className="w-56 h-56 overflow-hidden mr-4"
       style={{
         backgroundImage: `url(${imageUrl})`,
-        backgroundSize: "cover",
+        backgroundSize: "contain",
         backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     />
     <div className="flex flex-col">
       <h2 className="text-lg font-semibold text-white">{name}</h2>
       {description && <p className="text-sm text-white mt-1">{description}</p>}
-      <p className="text-sm text-white mt-1">Size: {size}</p>
-      <p className="text-md font-semibold text-white mt-2">₱{price}</p>
+      {/* <p className="text-sm text-white mt-1">{size}</p> */}
+      <p className="text-2xl font-semibold text-white  mt-2">₱{price}</p>
     </div>
   </div>
 );
@@ -43,7 +42,7 @@ const Menu = () => {
     { id: 2, category: "Shakes" },
     { id: 3, category: "Drink" },
     { id: 4, category: "Bites" },
-  ]
+  ];
 
   return (
     <div className="flex min-h-screen">
@@ -71,94 +70,28 @@ const Menu = () => {
           </nav>
         </header>
 
-        <section className="flex-1 overflow-y-auto bg-white px-4 sm:px-8 py-8 space-y-20">
-          {getData
-            .filter((product: TProductProps) => product.Category === "Scramble")
-            .map((product: TProductProps) => {
-              return (
-                <div key={product.Itemcode} id={product.Category}>
-                  <h2 className="text-2xl font-bold text-pink-500 mb-6 text-left">
-                    {product.Item_Name}
-                  </h2>
-                  <div className="flex flex-wrap gap-6">
-                    <ProductCard
-                      key={product.Itemcode}
-                      imageUrl={`http://127.0.0.1:8000/api/storage/${product.Image}`}
-                      name={product.Item_Name}
-                      description={product.Description}
-                      size={''}
-                      price={product.Unit_Price}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-
-          {getData
-            .filter((product: TProductProps) => product.Category === "Shakes")
-            .map((product: TProductProps) => {
-              return (
-                <div key={product.Itemcode} id={product.Category}>
-                  <h2 className="text-2xl font-bold text-pink-500 mb-6 text-left">
-                    {product.Item_Name}
-                  </h2>
-                  <div className="flex flex-wrap gap-6">
-                    <ProductCard
-                      key={product.Itemcode}
-                      imageUrl={`http://127.0.0.1:8000/api/storage/${product.Image}`}
-                      name={product.Item_Name}
-                      description={product.Description}
-                      size={product.Item_Name}
-                      price={product.Unit_Price}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-
-          {getData
-            .filter((product: TProductProps) => product.Category === "Drink")
-            .map((product: TProductProps) => {
-              return (
-                <div key={product.Itemcode} id={product.Category}>
-                  <h2 className="text-2xl font-bold text-pink-500 mb-6 text-left">
-                    {product.Item_Name}
-                  </h2>
-                  <div className="flex flex-wrap gap-6">
-                    <ProductCard
-                      key={product.Itemcode}
-                      imageUrl={`http://127.0.0.1:8000/api/storage/${product.Image}`}
-                      name={product.Item_Name}
-                      description={product.Description}
-                      size={product.Item_Name}
-                      price={product.Unit_Price}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-
-          {getData
-            .filter((product: TProductProps) => product.Category === "Bites")
-            .map((product: TProductProps) => {
-              return (
-                <div key={product.Itemcode} id={product.Category}>
-                  <h2 className="text-2xl font-bold text-pink-500 mb-6 text-left">
-                    {product.Item_Name}
-                  </h2>
-                  <div className="flex flex-wrap gap-6">
-                    <ProductCard
-                      key={product.Itemcode}
-                      imageUrl={`http://127.0.0.1:8000/api/storage/${product.Image}`}
-                      name={product.Item_Name}
-                      description={product.Description}
-                      size={product.Item_Name}
-                      price={product.Unit_Price}
-                    />
-                  </div>
-                </div>
-              );
-            })}
+        <section className=" overflow-y-auto px-4 sm:px-8 py-8 space-y-20">
+          {Categories.map((categoryItem) => {
+            const filteredProducts = getData.filter(
+              (product: TProductProps) => product.Category === categoryItem.category
+            );
+            return (
+              <div key={categoryItem.id} id={categoryItem.category}>
+          <h2 className="text-2xl font-bold text-pink-500 mb-4">{categoryItem.category}</h2>
+          <div className="flex flex-wrap gap-6">
+            {filteredProducts.slice(0, 4).map((product: TProductProps) => (
+              <ProductCard
+                key={product.Itemcode}
+                imageUrl={`http://127.0.0.1:8000/api/storage/${product.Image}`}
+                name={product.Item_Name}
+                description={product.Description}
+                price={product.Unit_Price}
+              />
+            ))}
+          </div>
+              </div>
+            );
+          })}
         </section>
       </main>
     </div>
