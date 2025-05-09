@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\PreventBackHistory;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Orders\OrdersController;
 use App\Http\Controllers\Products\ProductsController;
 
 Route::get('/', function () {
@@ -31,10 +32,23 @@ Route::middleware(['auth:admin'])->group( function() {
         return view('Admin.Pages.ArchiveProducts', compact('archive_products'));
     })->name('archive-products')->middleware(PreventBackHistory::class);
     Route::get('/orders', function() {
-        return view('Admin.Pages.Orders');
+        $orders = DB::table('orders')->get();
+        $countAllOrders = DB::table('orders')->count();
+        return view('Admin.Pages.Orders' , compact('orders','countAllOrders'));
     })->name('orders')->middleware(PreventBackHistory::class);
-    Route::get('/receipt', function() {
-        return view('Admin.Pages.Receipt');
+    Route::get('/receipt/{ordercode}/{productID}/{productName}/{productCategory}/{productPrice}/{productDate}/{quantity}/{total_price}', 
+        function($ordercode,$productID,$productName,$productCategory,$productPrice,$productDate,$quantity,$total_price) {
+        return view('Admin.Pages.Receipt',[
+            'ordercode' => $ordercode,
+            'productID' => $productID,
+            'productName' => $productName,
+            'productCategory' => $productCategory,
+            'productPrice' => $productPrice,
+            'productDate' => $productDate,
+            'quantity' => $quantity,
+            'total_price' => $total_price
+
+        ]);
     })->name('receipt')->middleware(PreventBackHistory::class);
 });
 
@@ -51,3 +65,6 @@ Route::delete('/delete/products/{id}' , [ProductsController::class , 'delete'])-
 Route::post('/login/admin', [AdminController::class , 'login'])->name('login.admin');
 Route::post('/logout/admin', [AdminController::class , 'logout'])->name('logout.admin');
 
+//Order Routes
+Route::post('/create/order', [OrdersController::class , 'CreateOrder'])->name('create.order');
+Route::delete('/delete/order/{id}', [OrdersController::class , 'DeleteOrder'])->name('delete.order');

@@ -188,7 +188,7 @@ body {
 }
 
 input[type="number"] {
-    width: 25%;
+    width: 30%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -407,6 +407,28 @@ input[type="checkbox"]:checked:after {
     font-size: 18px;
     font-weight: bold;
 }
+
+.no-orders{
+    margin-left: 50%;
+    width: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+.no-orders h2{
+    color: #ff5e78;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+.no-orders p {
+    color: #888;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+
 
 @media (max-width: 1024px) {
     .orderCardsContainer {
