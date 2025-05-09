@@ -31,7 +31,7 @@
 
         <li>
           <a href="{{route('products')}}">
-            <img src="/images/product.png" alt="">
+            <img src="assets/components/product.png" alt="">
             <span class="nav-text">Products</span>
           </a>
         </li>
@@ -45,14 +45,14 @@
 
         <li>
         <a href="">
-        <img src="/images/ingredients.png" alt="">
+        <img src="assets/components/ingredients.png" alt="">
             <span class="nav-text">Ingredients</span>
           </a>
         </li>
 
         <li>
         <a href="">
-        <img src="/images/expenses.png" alt="">
+        <img src="assets/components/expenses.png" alt="">
             <span class="nav-text">Expenses</span>
           </a>
         </li>
@@ -63,7 +63,7 @@
     <form action="{{route('logout.admin')}}" method="post">
       @csrf
       <button type="submit">
-        <img src="/images/logout.png" alt="">
+        <img src="assets/components/logout.png" alt="">
       </button>
     </form>
   </div>
