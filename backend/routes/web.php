@@ -60,6 +60,10 @@ Route::middleware(['auth:admin'])->group( function() {
     Route::get('/editinventory', function() {
         return view('Admin.Pages.EditInventory');
     })->name('editinventory')->middleware(PreventBackHistory::class);
+    Route::get('/sales', function() {
+        return view('Admin.Pages.Sales');
+    })->name('sales')->middleware(PreventBackHistory::class);
+
 });
 
 
