@@ -109,7 +109,7 @@
                 </div>
 
                 <div class="product-actions">
-                <a href="{{route('invoice')}}">
+                <a href="{{route('receipt')}}">
                     <button class="action-btn edit-btn">Receipt</button>
                 </a>
                     <button class="action-btn delete-btn">Delete</button>
@@ -117,7 +117,7 @@
             </div>
 
             <script>
-            document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const createNewOrderLink = document.getElementById('createNewOrderLink');
             const newOrderForm = document.getElementById('newOrderForm');
             const closeFormButton = document.getElementById('closeFormButton');
