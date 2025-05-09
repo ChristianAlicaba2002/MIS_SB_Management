@@ -29,11 +29,11 @@
         <div class="receipt-details">
             <div>
                 <div class="receipt-details-label">Order No:</div>
-                12345
+                {{ $ordercode }}
             </div>
             <div>
-                <div class="receipt-details-label">Date and Time:</div>
-                1 Jan 2025 12:00 PM
+                <div class="receipt-details-label">Date:</div>
+                {{$productDate}}
             </div>
         </div>
         <table class="receipt-items">
@@ -48,40 +48,31 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Choco</td>
-                    <td>Scramble</td>
-                    <td>1</td>
-                    <td>₱123</td>
-                    <td>₱123</td>
-                </tr>
-                <tr>
-                    <td>Ube</td>
-                    <td>Scramble</td>
-                    <td>2</td>
-                    <td>₱127</td>
-                    <td>₱254</td>
-                </tr>
-                <tr>
-                    <td>Straw</td>
-                    <td>Scramble</td>
-                    <td>1</td>
-                    <td>₱123</td>
-                    <td>₱123</td>
+                    <td>{{$productName}}</td>
+                    <td>{{$productCategory}}</td>
+                    <td>{{$quantity}}</td>
+                    <td>&#8369;{{$productPrice}}</td>
+                    <td>&#8369;{{ number_format( $total_price , 2)}}</td>
                 </tr>
             </tbody>
         </table>
         <div class="receipt-summary">
             <div class="detail-row">
                 <div class="detail-label">Subtotal:</div>
-                <div class="detail-value">₱500</div>
+                <div class="detail-value">&#8369;{{ number_format( $total_price, 2)}}</div>
             </div>
             <div class="detail-row">
-                <div class="detail-label">Tax (0%):</div>
-                <div class="detail-value">₱0</div>
+                <div class="detail-label">Tax (12%):</div>
+                @php
+                    $total_price = $productPrice * $quantity;   
+                    $tax = $total_price * 0.12;
+                    $total_price = $total_price + $tax;
+                @endphp
+                <div class="detail-value">&#8369;{{  $tax }}</div>
             </div>
             <div class="detail-row">
                 <div class="detail-label-total">Total:</div>
-                <div class="detail-value-total">₱500</div>
+                <div class="detail-value-total">&#8369;  {{ number_format($total_price)  }}</div>
             </div>
         </div>
         <div class="thank-you">
