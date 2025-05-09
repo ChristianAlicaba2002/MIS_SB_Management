@@ -34,6 +34,9 @@
             <a href="#" id="createNewOrderLink">
                 <button class="btn"><span class="btn-icon">+</span> Add New inventory</button>
             </a>
+            <a href="/archiveinventory" id="archiveinventory">
+                <button class="btn"><img src="/images/archives.png" alt="Archives">Archives</button>
+            </a>
         </div>
 
         <!-- Inventor Table   -->
@@ -70,7 +73,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="archive">
-                                        <img src="/images/archives.png" alt="Archive">
+                                        <img src="/images/archive.png" alt="Archive">
                                         Archive
                                     </button>
                                 </form>
