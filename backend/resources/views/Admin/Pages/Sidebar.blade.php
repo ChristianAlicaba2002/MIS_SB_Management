@@ -23,8 +23,8 @@
         </li>
 
         <li>
-            <a href="">
-                <img src="/images/sales.png" alt="">
+        <a href="{{route('sales')}}">
+            <img src="/images/sales.png" alt="">
             <span class="nav-text">Sales</span>
           </a>
         </li>
