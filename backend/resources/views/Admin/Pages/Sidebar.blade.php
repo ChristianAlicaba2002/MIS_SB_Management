@@ -44,9 +44,9 @@
         </li>
 
         <li>
-        <a href="">
-        <img src="/images/ingredients.png" alt="">
-            <span class="nav-text">Ingredients</span>
+        <a href="{{route('inventory')}}">
+        <img src="/images/inventory.png" alt="">
+            <span class="nav-text">Inventory</span>
           </a>
         </li>
 
