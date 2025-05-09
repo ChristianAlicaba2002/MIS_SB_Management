@@ -77,7 +77,7 @@ class InventoryController extends Controller
             'inventoryExpirationDate' => $deleteInventory->inventoryExpirationDate,
         ]);
 
-        return redirect()->route('archiveinventory')->with('success', 'Inventory deleted successfully');
+        return redirect()->route('inventory')->with('success', 'Inventory archived successfully');
     }
 
     public function RestoreInventory($id)
