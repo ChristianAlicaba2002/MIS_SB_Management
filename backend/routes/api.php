@@ -9,3 +9,9 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/products', [ProductsController::class , 'Products']);
+
+Route::get('/storage/{imageName}', function ($imageName) {
+    return response()->file(public_path('/images/' . $imageName));
+});
+
+

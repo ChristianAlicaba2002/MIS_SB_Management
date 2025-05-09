@@ -20,9 +20,9 @@
         <a href="{{route('products')}}" class="back-link">
             <img src="/images/back.png" alt="Back">
         </a>
-
+        
         <h1>PRODUCT ARCHIVES</h1>
-
+        
         <table class="table" id="productTable">
             <thead>
                 <tr>
