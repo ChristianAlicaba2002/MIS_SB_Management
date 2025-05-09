@@ -44,7 +44,12 @@
       labels: ['Ice Scramble', 'Shakes', 'Drinks', 'Snack Bites'],
       datasets: [{
         label: 'Total Sales (₱)',
-        data: [100, 200, 300, 400],
+        data: @if(empty($totalSales) || array_sum($totalSales) === 0) 
+            [0, 0, 0, 0]
+        @else 
+            {{ $totalSales }}
+        @endif,
+        emptyDataMessage: 'No sales data available',
         backgroundColor: ['#FFB6A6', '#A6C1FF', '#FFD1D1', '#D1A6FF'],
         borderRadius: 5
       }]
@@ -91,14 +96,19 @@
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       datasets: [{
         label: 'Monthly Sales (₱)',
-        data: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 2000],
+        data: @if(empty($monthlySales) || array_sum($monthlySales->toArray()) === 0) 
+            [0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0]
+        @else 
+            { $monthlySales }
+        @endif,
+        emptyDataMessage: 'No monthly sales data available',
         fill: true,
         tension: 0.3,
         pointRadius: 3,
         pointHoverRadius: 5,
         borderColor: '#ff5e78',
         backgroundColor: 'rgba(255, 94, 120, 0.1)',
-        borderWidth: 2
+        borderWidth: 2,
       }]
     };
 
