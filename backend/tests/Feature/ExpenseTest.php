@@ -11,14 +11,17 @@ class ExpenseTest extends TestCase
 {
     use RefreshDatabase;
 
+
+
     public function test_expense_can_be_created(): void
     {
-        $response = $this->postJson('/api/addexpenses', [
-            'name' => 'Rent',
-            'amount' => 4000.00,
-            'time' => now(),
-            'category' => 'Essentials'
-        ]);
+    $response = $this->post(route('add.expense'), [
+        'name' => 'Rent',
+        'amount' => 4000.00,
+        'time' => now(),
+        'category' => 'Essentials'
+    ]);
+
         $response->assertStatus(201);
         $this->assertDatabaseHas('expenses', ['name' => 'Rent']);
     }
@@ -33,13 +36,13 @@ class ExpenseTest extends TestCase
         ]);
         dump(Expense::count());
 
-        $response = $this->deleteJson("/api/expenses/{$expense->id}");
+        $response = $this->delete(route('delete.expense', ['id' => $expense->id]));
         $response->assertStatus(200);
         $this->assertSoftDeleted('expenses', ['id' => $expense->id]);
 
         dump(Expense::withTrashed()->find($expense->id));
 
-        $response = $this->postJson("/api/expenses/{$expense->id}/restore");
+        $response = $this->post(route('restore.expense', ['id' => $expense->id]));
 
         $response->assertStatus(200);
 
@@ -68,7 +71,7 @@ class ExpenseTest extends TestCase
         }
 
 
-        $response = $this->getJson('/api/expenses');
+        $response = $this->get(route('list.expenses'));
         $response->assertStatus(200);
         $response->assertJsonCount(3);
     }
