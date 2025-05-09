@@ -20,7 +20,7 @@ Route::get('/', function () {
 Route::middleware(['auth:admin'])->group( function() {
     Route::get('/dashboard', function() {
         return view('Admin.Layouts.Dashboard');
-    })->name('dashboard')->middleware(PreventBackHistory::class); 
+    })->name('dashboard')->middleware(PreventBackHistory::class);
     Route::get('/products', function() {
         $products = Products::all();
         $categories = DB::table('products')->pluck('Category')->unique();
@@ -30,6 +30,12 @@ Route::middleware(['auth:admin'])->group( function() {
         $archive_products = DB::table('archive_products')->get();
         return view('Admin.Pages.ArchiveProducts', compact('archive_products'));
     })->name('archive-products')->middleware(PreventBackHistory::class);
+    Route::get('/orders', function() {
+        return view('Admin.Pages.Orders');
+    })->name('orders')->middleware(PreventBackHistory::class);
+    Route::get('/invoice', function() {
+        return view('Admin.Pages.Invoice');
+    })->name('invoice')->middleware(PreventBackHistory::class);
 });
 
 
@@ -41,7 +47,7 @@ Route::delete('/archive/products/{id}' , [ProductsController::class , 'archive']
 Route::delete('/restore/products/{id}' , [ProductsController::class , 'restore'])->name('restore.item');
 Route::delete('/delete/products/{id}' , [ProductsController::class , 'delete'])->name('delete.item');
 
-
 //Admin Routes
 Route::post('/login/admin', [AdminController::class , 'login'])->name('login.admin');
 Route::post('/logout/admin', [AdminController::class , 'logout'])->name('logout.admin');
+
