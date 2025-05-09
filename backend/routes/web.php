@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\PreventBackHistory;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Orders\OrdersController;
-use App\Http\Controllers\Products\ProductsController;
 use App\Http\Controllers\Expenses\ExpenseController;
+use App\Http\Controllers\Products\ProductsController;
+use App\Http\Controllers\Inventory\InventoryController;
 
 Route::get('/', function () {
     if(Auth::guard('admin')->check())
@@ -52,10 +53,12 @@ Route::middleware(['auth:admin'])->group( function() {
         ]);
     })->name('receipt')->middleware(PreventBackHistory::class);
     Route::get('/inventory', function() {
-        return view('Admin.Pages.Inventory');
+        $inventories = DB::table('inventories')->get();
+        return view('Admin.Pages.Inventory',compact('inventories'));
     })->name('inventory')->middleware(PreventBackHistory::class);
     Route::get('/archiveinventory', function() {
-        return view('Admin.Pages.ArchiveInventory');
+        $archive_inventories = DB::table('archive_inventories')->get();
+        return view('Admin.Pages.ArchiveInventory',compact('archive_inventories'));
     })->name('archiveinventory')->middleware(PreventBackHistory::class);
     Route::get('/editinventory', function() {
         return view('Admin.Pages.EditInventory');
@@ -84,3 +87,10 @@ Route::post('/addexpenses', [ExpenseController::class, 'store'])->name('add.expe
 Route::delete('/expenses/{id}', [ExpenseController::class, 'destroy'])->name('delete.expense');
 Route::post('/expenses/{id}/restore', [ExpenseController::class, 'restore'])->name('restore.expense');
 Route::get('/expenses', [ExpenseController::class, 'index'])->name('list.expenses');
+
+//Inventory Routes
+Route::post('/addinventory', [InventoryController::class, 'AddInventory'])->name('add.inventory');
+Route::put('/updateinventory/{id}', [InventoryController::class, 'UpdateInventory'])->name('update.inventory');
+Route::delete('/archiveinventory/{id}', [InventoryController::class, 'ArchiveInventory'])->name('archive.inventory');
+Route::delete('/restoreinventory/{id}', [InventoryController::class, 'RestoreInventory'])->name('restore.inventory');
+Route::delete('/deleteinventory/{id}', [InventoryController::class, 'DeleteInventory'])->name('delete.inventory');
