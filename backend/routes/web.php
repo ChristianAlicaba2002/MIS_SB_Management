@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\PreventBackHistory;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Orders\OrdersController;
+use App\Http\Controllers\Expenses\ExpenseController;
 use App\Http\Controllers\Products\ProductsController;
+use App\Http\Controllers\Inventory\InventoryController;
 
 Route::get('/', function () {
     if(Auth::guard('admin')->check())
@@ -36,7 +38,7 @@ Route::middleware(['auth:admin'])->group( function() {
         $countAllOrders = DB::table('orders')->count();
         return view('Admin.Pages.Orders' , compact('orders','countAllOrders'));
     })->name('orders')->middleware(PreventBackHistory::class);
-    Route::get('/receipt/{ordercode}/{productID}/{productName}/{productCategory}/{productPrice}/{productDate}/{quantity}/{total_price}', 
+    Route::get('/receipt/{ordercode}/{productID}/{productName}/{productCategory}/{productPrice}/{productDate}/{quantity}/{total_price}',
         function($ordercode,$productID,$productName,$productCategory,$productPrice,$productDate,$quantity,$total_price) {
         return view('Admin.Pages.Receipt',[
             'ordercode' => $ordercode,
@@ -50,6 +52,21 @@ Route::middleware(['auth:admin'])->group( function() {
 
         ]);
     })->name('receipt')->middleware(PreventBackHistory::class);
+    Route::get('/inventory', function() {
+        $inventories = DB::table('inventories')->get();
+        return view('Admin.Pages.Inventory',compact('inventories'));
+    })->name('inventory')->middleware(PreventBackHistory::class);
+    Route::get('/archiveinventory', function() {
+        $archive_inventories = DB::table('archive_inventories')->get();
+        return view('Admin.Pages.ArchiveInventory',compact('archive_inventories'));
+    })->name('archiveinventory')->middleware(PreventBackHistory::class);
+    Route::get('/editinventory', function() {
+        return view('Admin.Pages.EditInventory');
+    })->name('editinventory')->middleware(PreventBackHistory::class);
+    Route::get('/sales', function() {
+        return view('Admin.Pages.Sales');
+    })->name('sales')->middleware(PreventBackHistory::class);
+
 });
 
 
@@ -68,3 +85,16 @@ Route::post('/logout/admin', [AdminController::class , 'logout'])->name('logout.
 //Order Routes
 Route::post('/create/order', [OrdersController::class , 'CreateOrder'])->name('create.order');
 Route::delete('/delete/order/{id}', [OrdersController::class , 'DeleteOrder'])->name('delete.order');
+
+// Expense Routes
+Route::post('/addexpenses', [ExpenseController::class, 'store'])->name('add.expense');
+Route::delete('/expenses/{id}', [ExpenseController::class, 'destroy'])->name('delete.expense');
+Route::post('/expenses/{id}/restore', [ExpenseController::class, 'restore'])->name('restore.expense');
+Route::get('/expenses', [ExpenseController::class, 'index'])->name('list.expenses');
+
+//Inventory Routes
+Route::post('/addinventory', [InventoryController::class, 'AddInventory'])->name('add.inventory');
+Route::put('/updateinventory/{id}', [InventoryController::class, 'UpdateInventory'])->name('update.inventory');
+Route::delete('/archiveinventory/{id}', [InventoryController::class, 'ArchiveInventory'])->name('archive.inventory');
+Route::delete('/restoreinventory/{id}', [InventoryController::class, 'RestoreInventory'])->name('restore.inventory');
+Route::delete('/deleteinventory/{id}', [InventoryController::class, 'DeleteInventory'])->name('delete.inventory');
