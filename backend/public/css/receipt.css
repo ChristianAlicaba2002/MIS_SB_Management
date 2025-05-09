@@ -1,0 +1,180 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.back-button {
+    position: absolute;
+    top: 1rem;
+    left: 2rem;
+    cursor: pointer;
+}
+
+.back-button img {
+    width: 30px;
+    height: 30px;
+}
+
+.back-button img:hover{
+    transform: scale(1.05);
+}
+
+.receipt-container {
+    background-color: #fff;
+    width: 80%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 18px rgba(255, 107, 164, 0.36);
+    position: relative;
+}
+
+.save-button-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.save-button-container button {
+    padding: 8px 12px;
+    color: #FE5196;
+    font-weight: 700;
+    border: 1px solid #FE5196;
+    border-radius: 20px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.save-button-container button:hover {
+    border: 1px solid white;
+    background: linear-gradient(to right,rgb(255, 165, 156),rgb(255, 165, 201));
+    color: white;
+}
+.save-button-container img{
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+}
+
+#receiptContent {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.receipt-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.receipt-logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+.receipt-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.receipt-title {
+    width: 230px;
+    font-family: 'Playfair Display', serif, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(to right, #F77062, #FE5196);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.receipt-details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.receipt-details-label {
+    color: #555;
+}
+
+.receipt-items {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.receipt-items thead {
+    border-bottom: 1px solid #ddd;
+}
+
+.receipt-items th,
+.receipt-items td {
+    padding: 8px;
+    text-align: left;
+    font-size: 12px;
+}
+
+.receipt-items th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+    color: #555;
+}
+
+.receipt-items td {
+    color: #333;
+}
+
+.receipt-summary {
+    margin-left: 5px;
+    text-align: left;
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+
+.receipt-summary .detail-label {
+    font-weight: 600;
+    color: #555;
+}
+
+.receipt-summary-value {
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.detail-label-total{
+    margin-top: 5px;
+    border-top: 1px solid #555;
+    font-size: 15px;
+    font-weight: 600;
+    color: #555;
+}
+
+.detail-value-total{
+    border-bottom: 1px solid #555;
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+}
+.thank-you {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
