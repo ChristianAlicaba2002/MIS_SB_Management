@@ -33,8 +33,15 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
+
 }
 
+.action-bar img{
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
 .btn {
     background-color: white;
     border: 1px solid rgb(255, 133, 153);
@@ -45,7 +52,6 @@ body {
     cursor: pointer;
     transition: all 0.4s ease-in-out;
     align-items: center;
-    gap: 8px;
     color: #ff5e78;
     text-decoration: none;
 }
