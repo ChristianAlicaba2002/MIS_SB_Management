@@ -99,7 +99,7 @@
         data: @if(empty($monthlySales) || array_sum($monthlySales->toArray()) === 0) 
             [0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0]
         @else 
-            { $monthlySales }
+            {{ $monthlySales }}
         @endif,
         emptyDataMessage: 'No monthly sales data available',
         fill: true,
