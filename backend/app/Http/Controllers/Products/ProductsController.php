@@ -60,10 +60,7 @@ class ProductsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return Response()->json([
-                'status' => false,
-                'message' => $validator->errors(),
-            ]);
+            return redirect()->route('products')->with('error' ,$validator->errors());
         }
 
         $itemCode = $this->generateRandomItemCode();
@@ -77,8 +74,6 @@ class ProductsController extends Controller
             $file->move(public_path('images'), $filename);
             $data['Image'] = $filename;
         }
-
-        
 
         $result = $this->registerProduct->create(
             $itemCode,
@@ -98,10 +93,7 @@ class ProductsController extends Controller
         $item = Products::where('Itemcode', $Itemcode)->first();
 
         if (!$item) {
-            return Response()->json([
-                'status' => false,
-                'message' => 'Item not found'
-            ]);
+            return redirect()->route('products')->with('error' ,'Item not found');
         }
 
         $sanitized = array_map('trim', $request->all());
@@ -148,14 +140,10 @@ class ProductsController extends Controller
         $item = Products::where('Itemcode', $Itemcode)->first();
 
         if (!$item) {
-            return Response()->json([
-                'status' => false,
-                'message' => 'Item not found'
-            ]);
+            return redirect()->route('products')->with('error' ,'Item not found');
         }
 
         $this->registerProduct->delete($Itemcode);
-
 
         $archive = ArchiveProducts::create([
             'Itemcode' => $item->Itemcode,
@@ -175,10 +163,7 @@ class ProductsController extends Controller
         $item = ArchiveProducts::where('Itemcode', $Itemcode)->first();
 
         if (!$item) {
-            return Response()->json([
-                'status' => false,
-                'message' => 'Item not found'
-            ]);
+            return redirect()->route('archive-products')->with('error' ,'Item not found');
         }
 
         DB::table('archive_products')->where('Itemcode' , $Itemcode)->delete();
@@ -201,10 +186,7 @@ class ProductsController extends Controller
         $item = ArchiveProducts::where('Itemcode', $Itemcode)->first();
 
         if (!$item) {
-            return Response()->json([
-                'status' => false,
-                'message' => 'Item not found'
-            ]);
+            return redirect()->route('archive-products')->with('success' , 'Item not found');
         }
 
         DB::table('archive_products')->where('Itemcode' , $Itemcode)->delete();
