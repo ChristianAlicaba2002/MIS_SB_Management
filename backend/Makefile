@@ -14,5 +14,4 @@ run:
 	php artisan serve
 
 test:
-	copy .env .env.testing || echo ".env.testing already exists, skipping copy
 	php artisan test
