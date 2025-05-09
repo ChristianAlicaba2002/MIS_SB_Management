@@ -13,9 +13,14 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id('ordercode');
-            $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('Itemcode')->on('products')->onDelete('cascade');
+            $table->foreignId('productID')->references('Itemcode')->on('products')->onDelete('cascade');
+            $table->string('productName')->references('Item_name')->on('products');
+            $table->string('productCategory')->references('Category')->on('products');
+            $table->decimal('productPrice', 10, 2)->references('Unit_Price')->on('products');
+            $table->integer('quantity');
             $table->decimal('total_price', 10, 2);
+            $table->string('productImage')->references('Image')->on('products');
+            $table->date('productDate');
             $table->timestamps();
         });
     }
