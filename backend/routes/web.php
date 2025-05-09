@@ -8,6 +8,7 @@ use App\Http\Middleware\PreventBackHistory;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Orders\OrdersController;
 use App\Http\Controllers\Products\ProductsController;
+use App\Http\Controllers\Expenses\ExpenseController;
 
 Route::get('/', function () {
     if(Auth::guard('admin')->check())
@@ -36,7 +37,7 @@ Route::middleware(['auth:admin'])->group( function() {
         $countAllOrders = DB::table('orders')->count();
         return view('Admin.Pages.Orders' , compact('orders','countAllOrders'));
     })->name('orders')->middleware(PreventBackHistory::class);
-    Route::get('/receipt/{ordercode}/{productID}/{productName}/{productCategory}/{productPrice}/{productDate}/{quantity}/{total_price}', 
+    Route::get('/receipt/{ordercode}/{productID}/{productName}/{productCategory}/{productPrice}/{productDate}/{quantity}/{total_price}',
         function($ordercode,$productID,$productName,$productCategory,$productPrice,$productDate,$quantity,$total_price) {
         return view('Admin.Pages.Receipt',[
             'ordercode' => $ordercode,
@@ -68,3 +69,9 @@ Route::post('/logout/admin', [AdminController::class , 'logout'])->name('logout.
 //Order Routes
 Route::post('/create/order', [OrdersController::class , 'CreateOrder'])->name('create.order');
 Route::delete('/delete/order/{id}', [OrdersController::class , 'DeleteOrder'])->name('delete.order');
+
+// Expense Routes
+Route::post('/addexpenses', [ExpenseController::class, 'store'])->name('add.expense');
+Route::delete('/expenses/{id}', [ExpenseController::class, 'destroy'])->name('delete.expense');
+Route::post('/expenses/{id}/restore', [ExpenseController::class, 'restore'])->name('restore.expense');
+Route::get('/expenses', [ExpenseController::class, 'index'])->name('list.expenses');
