@@ -37,8 +37,8 @@
         </li>
 
         <li>
-        <a href="">
-        <img src="assets/components/order.png" alt="">
+        <a href="{{route('orders')}}">
+        <img src="/images/order.png" alt="">
             <span class="nav-text">Orders</span>
           </a>
         </li>
