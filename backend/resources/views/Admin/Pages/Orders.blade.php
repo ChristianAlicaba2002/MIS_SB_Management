@@ -129,9 +129,9 @@
                 </div>
 
                 <div class="product-actions">
-                <a href="{{route('receipt')}}">
-                    <button class="action-btn edit-btn">Receipt</button>
-                </a>
+                    <a href="{{route('receipt')}}">
+                        <button class="action-btn edit-btn">Receipt</button>
+                    </a>
                     <button class="action-btn delete-btn">Delete</button>
                     <a href="/receipt/{{$order->ordercode}}/{{$order->productID}}/{{$order->productName}}/{{$order->productCategory}}/{{$order->productPrice}}/{{$order->productDate}}/{{$order->quantity}}/{{ $order->total_price }}">
                         <button class="action-btn edit-btn">Receipt</button>
@@ -155,21 +155,20 @@
 
 
             <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const createNewOrderLink = document.getElementById('createNewOrderLink');
-            const newOrderForm = document.getElementById('newOrderForm');
-            const closeFormButton = document.getElementById('closeFormButton');
+                document.addEventListener('DOMContentLoaded', function() {
+                    const createNewOrderLink = document.getElementById('createNewOrderLink');
+                    const newOrderForm = document.getElementById('newOrderForm');
+                    const closeFormButton = document.getElementById('closeFormButton');
 
-            createNewOrderLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                newOrderForm.style.display = 'block';
-            });
+                    createNewOrderLink.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        newOrderForm.style.display = 'block';
+                    });
 
-            closeFormButton.addEventListener('click', function() {
-                newOrderForm.style.display = 'none';
-            });
-        });
-    </script>
+                    closeFormButton.addEventListener('click', function() {
+                        newOrderForm.style.display = 'none';
+                    });
+                });
                 document.addEventListener('DOMContentLoaded', function() {
                     const createNewOrderLink = document.getElementById('createNewOrderLink');
                     const newOrderForm = document.getElementById('newOrderForm');
