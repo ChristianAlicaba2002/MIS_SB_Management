@@ -50,6 +50,15 @@ Route::middleware(['auth:admin'])->group( function() {
 
         ]);
     })->name('receipt')->middleware(PreventBackHistory::class);
+    Route::get('/inventory', function() {
+        return view('Admin.Pages.Inventory');
+    })->name('inventory')->middleware(PreventBackHistory::class);
+    Route::get('/archiveinventory', function() {
+        return view('Admin.Pages.ArchiveInventory');
+    })->name('archiveinventory')->middleware(PreventBackHistory::class);
+    Route::get('/editinventory', function() {
+        return view('Admin.Pages.EditInventory');
+    })->name('editinventory')->middleware(PreventBackHistory::class);
 });
 
 
