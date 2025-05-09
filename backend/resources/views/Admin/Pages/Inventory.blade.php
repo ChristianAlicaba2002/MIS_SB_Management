@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,19 @@
     <link rel="stylesheet" href="{{asset('css/inventory.css')}}">
     <link rel="shortcut icon" href="{{asset('/images/oop_logo.png')}}" type="image/x-icon">
 </head>
+
 <body>
     <aside>
         @include('Admin.Pages.Sidebar')
     </aside>
+
+    @if(session('success'))
+        <script>alert("{{session('success')}}")</script>
+    @endif
+
+    @if(session('error'))
+        <script>alert("{{session('error')}}")</script>
+    @endif
 
     <div class="content-wrapper">
         <div class="title">
@@ -26,6 +36,7 @@
             </a>
         </div>
 
+        <!-- Inventor Table   -->
         <div class="inventorys-table">
             <table>
                 <thead>
@@ -40,39 +51,52 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if(count($inventories) > 0)
+                    @foreach($inventories as $inventory)
                     <tr>
-                        <td>Flour</td>
-                        <td>1 spoon</td>
-                        <td>30</td>
+                        <td>{{$inventory->itemName}}</td>
+                        <td>{{$inventory->itemUnit}}</td>
+                        <td>{{$inventory->inventoryStock}}</td>
                         <td><span class="status status-in-stock">In Stock</span></td>
-                        <td>01-05-20</td>
-                        <td><span class="expirationDate"> 05-12-22</span></td>
+                        <td>{{$inventory->inventoryDateAdded}}</td>
+                        <td><span class="expirationDate">{{$inventory->inventoryExpirationDate}}</span></td>
                         <td>
                             <div class="action-btn">
-                                <button class="edit">
+                                <button class="edit" onclick="editInventory('{{$inventory->id}}' , '{{$inventory->itemName}}' , '{{$inventory->itemUnit}}' , '{{$inventory->inventoryStock}}' , '{{$inventory->inventoryDateAdded}}' , '{{$inventory->inventoryExpirationDate}}')">
                                     <img src="/images/edit.png" alt="Edit">
                                     Edit
                                 </button>
-                                <a href="{{route('archiveinventory')}}">
-                                <button class="archive">
-                                    <img src="/images/archives.png" alt="Archive">
-                                    Archive
-                                </button>
-                                </a>
+                                <form action="/archiveinventory/{{$inventory->id}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="archive">
+                                        <img src="/images/archives.png" alt="Archive">
+                                        Archive
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
-                    </tbody>
+                    @endforeach
+                    @else
+                    <tr>
+                        <td colspan="7" style="text-align: center;" class="no-data">No Inventory Data Available</td>
+                    </tr>
+                    @endif
+
+                </tbody>
             </table>
         </div>
     </div>
 
+    <!--Add New Inventory Form -->
     <div id="new-inventory-form">
         <button type="button" id="closeNewFormButton">
             <img src="/images/close.png" alt="Close">
         </button>
         <h2>Add Item to Inventory</h2>
-        <form>
+        <form action="{{route('add.inventory')}}" method="POST">
+            @csrf
             <div>
                 <label for="newItemName">Item Name</label>
                 <input type="text" id="newItemName" name="itemName" placeholder="Enter Item Name">
@@ -97,12 +121,16 @@
         </form>
     </div>
 
+
+    <!--Edit Inventory Form -->
     <div id="edit-inventory-form">
         <button type="button" id="closeEditFormButton">
             <img src="/images/close.png" alt="Close">
         </button>
         <h2>Edit Item</h2>
-        <form>
+        <form action="" method="POST">
+            @csrf
+            @method('PUT')
             <div>
                 <label for="editItemName">Item Name</label>
                 <input type="text" id="editItemName" name="itemName" placeholder="Enter Item Name">
@@ -143,7 +171,6 @@
 
         editButtons.forEach(button => {
             button.addEventListener('click', function() {
-
                 editForm.style.display = 'block';
             });
         });
@@ -151,6 +178,18 @@
         closeEditFormButton.addEventListener('click', function() {
             editForm.style.display = 'none';
         });
+
+
+        function editInventory(id, itemName, itemUnit, inventoryStock, inventoryDateAdded, inventoryExpirationDate) {
+            const editForm = document.querySelector('#edit-inventory-form form');
+            editForm.action = `/updateinventory/${id}`;
+            document.getElementById('editItemName').value = itemName;
+            document.getElementById('editItemUnit').value = itemUnit;
+            document.getElementById('editInventoryStock').value = inventoryStock;
+            document.getElementById('editInventoryDateAdded').value = inventoryDateAdded;
+            document.getElementById('editInventoryExpirationDate').value = inventoryExpirationDate;
+        }
     </script>
 </body>
+
 </html>
