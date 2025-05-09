@@ -33,9 +33,9 @@ Route::middleware(['auth:admin'])->group( function() {
     Route::get('/orders', function() {
         return view('Admin.Pages.Orders');
     })->name('orders')->middleware(PreventBackHistory::class);
-    Route::get('/invoice', function() {
-        return view('Admin.Pages.Invoice');
-    })->name('invoice')->middleware(PreventBackHistory::class);
+    Route::get('/receipt', function() {
+        return view('Admin.Pages.Receipt');
+    })->name('receipt')->middleware(PreventBackHistory::class);
 });
 
 
