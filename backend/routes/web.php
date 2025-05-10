@@ -114,13 +114,6 @@ Route::middleware(['auth:admin'])->group(function () {
             ->orderBy('month')
             ->get();
 
-        // // Get monthly order count
-        // $monthlyOrders = DB::table('orders')
-        //     ->select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as count'))
-        //     ->groupBy('month')
-        //     ->orderBy('month')
-        //     ->get();
-
         // Get sales by category
         $salesByCategory = DB::table('orders')
             ->select('productCategory', DB::raw('SUM(total_price) as total'))
@@ -138,10 +131,12 @@ Route::middleware(['auth:admin'])->group(function () {
     })->name('sales')->middleware(PreventBackHistory::class);
 
     Route::get('/expensesPage', function () {
-        return view('Admin.Pages.Expenses'); 
+        $expenses = DB::table('expenses')->orderBy('created_at' , 'desc')->get();
+        return view('Admin.Pages.Expenses',compact('expenses')); 
     })->name('expensesPage')->middleware(PreventBackHistory::class);
     Route::get('/expensesArchive', function () {
-        return view('Admin.Pages.ArchiveExpenses'); 
+        $archive_expenses = DB::table('archive_expenses')->orderBy('created_at' , 'desc')->get();
+        return view('Admin.Pages.ArchiveExpenses', compact('archive_expenses')); 
     })->name('expensesArchive')->middleware(PreventBackHistory::class);
 });
 
@@ -164,8 +159,10 @@ Route::delete('/delete/order/{id}', [OrdersController::class, 'DeleteOrder'])->n
 
 // Expense Routes
 Route::post('/addexpenses', [ExpenseController::class, 'store'])->name('add.expense');
-Route::delete('/expenses/{id}', [ExpenseController::class, 'destroy'])->name('delete.expense');
-Route::post('/expenses/{id}/restore', [ExpenseController::class, 'restore'])->name('restore.expense');
+Route::put('/expenses/update/{id}', [ExpenseController::class, 'update'])->name('update.expense');
+Route::delete('/expenses/{id}/delete', [ExpenseController::class, 'destroy'])->name('delete.expense');
+Route::delete('/expenses/{id}/restore', [ExpenseController::class, 'restore'])->name('restore.expense');
+Route::delete('/expenses/{id}/archive', [ExpenseController::class, 'archive'])->name('archive.expense');
 Route::get('/expenses', [ExpenseController::class, 'index'])->name('list.expenses');
 
 //Inventory Routes
