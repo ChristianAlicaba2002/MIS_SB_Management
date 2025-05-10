@@ -41,7 +41,7 @@ class ProductsController extends Controller
 
         return Response()->json([
             'status' => true,
-            ',message' => 'Item Retrieved Successfully',
+            'message' => 'Item Retrieved Successfully',
             'data' => $item
         ]);
     }
@@ -190,7 +190,7 @@ class ProductsController extends Controller
         }
 
         DB::table('archive_products')->where('Itemcode' , $Itemcode)->delete();
-    
+
         return redirect()->route('archive-products')->with('success' , 'Deleted Successfully Created');
     }
 

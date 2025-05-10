@@ -148,8 +148,10 @@
         <div class="card">
           <div class="card-title">Order Received</div>
           <div class="stat-container">
-            <div><div class="stat-value">₱1,832</div></div>
-            <div class="trend-up">+12.5% ↑</div>
+            <div><div class="stat-value">₱{{ $orderReceived }}</div></div>
+            <div class="{{ $todayOrders >= 0 ? 'trend-up' : 'trend-down' }}">
+              {{ $todayOrders >= 0 ? '+' : '' }}{{ number_format($todayOrders, 1) }}% {{ $todayOrders >= 0 ? '↑' : '↓' }}
+            </div>
           </div>
           <div class="chart-container"><canvas id="orderChart"></canvas></div>
         </div>
@@ -157,8 +159,10 @@
         <div class="card">
           <div class="card-title">Sales Summary</div>
           <div class="stat-container">
-            <div><div class="stat-value">₱1,356,800</div></div>
-            <div class="trend-up">+8.2% ↑</div>
+            <div><div class="stat-value">₱{{ $totalSales }}</div></div>
+            <div class="{{ $todaySales >= 0 ? 'trend-up' : 'trend-down' }}">
+              {{ $todaySales >= 0 ? '+' : '' }}{{ number_format($todaySales, 1) }}% {{ $todaySales >= 0 ? '↑' : '↓' }}
+            </div>
           </div>
           <div class="chart-container"><canvas id="salesChart"></canvas></div>
         </div>
@@ -172,13 +176,14 @@
   </div>
 
   <script>
+    // ORDER CHARS
     const orderChart = new Chart(document.getElementById('orderChart'), {
       type: 'line',
       data: {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
         datasets: [{
           label: 'Orders',
-          data: [125, 232, 348, 290, 410, 427],
+          data: {{$todayOrders}},
           backgroundColor: 'rgba(255, 94, 120, 0.1)',
           borderColor: '#ff5e78',
           borderWidth: 2,
@@ -236,13 +241,15 @@
       }
     });
 
+
+    // SALES CHARTS
     const salesChart = new Chart(document.getElementById('salesChart'), {
       type: 'bar',
       data: {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
         datasets: [{
           label: 'Revenue',
-          data: [235000, 289000, 310000, 256000, 199000, 267800],
+          data: {{ $salesSummary }},
           backgroundColor: function(context) {
             const chart = context.chart;
             const { ctx, chartArea } = chart;
@@ -300,13 +307,14 @@
       }
     });
 
+    // BEST SELLERS CHARTS
     const bestSellersChart = new Chart(document.getElementById('bestSellersChart'), {
       type: 'bar',
       data: {
         labels: ['Ice Scramble', 'Shakes', 'Drinks', 'Snack Bites'],
         datasets: [{
           label: 'Sold',
-          data: [320, 280, 150, 190, 220],
+          data: {{ $bestSellers }},
           backgroundColor: ['#ff5e78', '#ffc0cb', '#ffa6c1', '#ff8da1'],
           borderRadius: 6,
           barThickness: 25

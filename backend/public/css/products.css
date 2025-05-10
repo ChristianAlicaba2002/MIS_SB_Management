@@ -289,12 +289,13 @@
 
   .form-control:focus {
       outline: none;
-      box-shadow: 0 0 0 1px #ff2181;
-      border-color: #ff2181;
+      box-shadow: 0 0 0 1px #eb659f;
+      border-color: #eb659f;
   }
 
   .add-button,
   .cancel-button {
+
       margin-top: 1rem;
       border: 2px solid #e6006c;
       background-color: transparent;
