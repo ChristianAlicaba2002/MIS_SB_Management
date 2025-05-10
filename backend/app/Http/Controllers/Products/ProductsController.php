@@ -51,9 +51,9 @@ class ProductsController extends Controller
         $sanitized = array_map('trim', $request->all());
 
         $validator = Validator::make($sanitized, [
-            'Item_Name' => 'required|string|min:5|max:255',
-            'Description' => 'required|string|min:5|max:255',
-            'Category' => 'required|string|min:5|max:50',
+            'Item_Name' => 'required|string|max:255',
+            'Description' => 'required|string|max:255',
+            'Category' => 'required|string|max:50',
             'Unit_Price' => 'required|numeric',
             'Quantity' => 'required|numeric',
             'Image' => 'required|nullable'
