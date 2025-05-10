@@ -44,10 +44,10 @@
       labels: ['Ice Scramble', 'Shakes', 'Drinks', 'Snack Bites'],
       datasets: [{
         label: 'Total Sales (₱)',
-        data: @if(empty($totalSales) || array_sum($totalSales) === 0) 
+        data: @if(empty($salesByCategory) || array_sum($salesByCategory->toArray()) === 0) 
             [0, 0, 0, 0]
         @else 
-            {{ $totalSales }}
+            {{ $salesByCategory }}
         @endif,
         emptyDataMessage: 'No sales data available',
         backgroundColor: ['#FFB6A6', '#A6C1FF', '#FFD1D1', '#D1A6FF'],
@@ -97,7 +97,7 @@
       datasets: [{
         label: 'Monthly Sales (₱)',
         data: @if(empty($monthlySales) || array_sum($monthlySales->toArray()) === 0) 
-            [0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0]
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         @else 
             {{ $monthlySales }}
         @endif,

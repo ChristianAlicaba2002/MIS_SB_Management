@@ -21,7 +21,47 @@ Route::get('/', function () {
 
 Route::middleware(['auth:admin'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('Admin.Layouts.Dashboard');
+        // Get best selling products
+        $bestSellers = DB::table('orders')
+            ->select('productName', DB::raw('SUM(quantity) as total_sold'))
+            ->groupBy('productName')
+            ->orderBy('total_sold', 'desc')
+            ->limit(5)
+            ->get();
+
+        // Get sales summary
+        $totalSales = DB::table('orders')->sum('total_price');
+
+        // Get sales for today
+        $todaySales = DB::table('orders')
+            ->whereDate('created_at', now()->toDateString())
+            ->sum('total_price');
+            
+        // Get order received
+        $orderReceived = DB::table('orders')
+            ->select(DB::raw('COUNT(*) as total'))
+            ->whereDate('created_at', now()->toDateString())
+            ->first()->total;
+        // Get today's orders
+        $todayOrders = DB::table('orders')
+            ->select(DB::raw('COUNT(*) as total'))
+            ->whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->first()->total;
+
+            // Get sales summary for each product category
+            $salesSummary = DB::table('orders')
+                ->select('productCategory', 
+                    DB::raw('COUNT(*) as order_count'),
+                    DB::raw('SUM(quantity) as total_quantity'),
+                    DB::raw('SUM(total_price) as total_sales'))
+                ->groupBy('productCategory')
+                ->get();
+
+            // Add to compact array
+            return view('Admin.Layouts.Dashboard', compact('bestSellers', 'totalSales', 'todaySales', 'orderReceived', 'todayOrders', 'salesSummary'));
+
+        return view('Admin.Layouts.Dashboard', compact('bestSellers', 'totalSales', 'todaySales', 'orderReceived', 'todayOrders'));
     })->name('dashboard')->middleware(PreventBackHistory::class);
     Route::get('/products', function () {
         $products = Products::all();
@@ -65,25 +105,6 @@ Route::middleware(['auth:admin'])->group(function () {
         return view('Admin.Pages.EditInventory');
     })->name('editinventory')->middleware(PreventBackHistory::class);
     Route::get('/sales', function () {
-        // Get total products
-        $totalProducts = Products::count();
-
-        // Get total inventory value
-        $totalInventoryValue = Products::sum(DB::raw('Unit_Price * Quantity'));
-
-        // Get products by category
-        $productsByCategory = DB::table('products')
-            ->select('Category', DB::raw('count(*) as total'))
-            ->groupBy('Category')
-            ->get();
-
-        // Get low stock items (quantity less than 10)
-        $lowStockItems = Products::where('Quantity', '<', 10)->count();
-
-        // Get total orders
-        $totalOrders = DB::table('orders')->count();
-
-
 
         // Get monthly sales data
         $monthlySales = DB::table('orders')
@@ -92,26 +113,26 @@ Route::middleware(['auth:admin'])->group(function () {
             ->orderBy('month')
             ->get();
 
-        // Get monthly order count
-        $monthlyOrders = DB::table('orders')
-            ->select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as count'))
-            ->groupBy('month')
-            ->orderBy('month')
+        // // Get monthly order count
+        // $monthlyOrders = DB::table('orders')
+        //     ->select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as count'))
+        //     ->groupBy('month')
+        //     ->orderBy('month')
+        //     ->get();
+
+        // Get sales by category
+        $salesByCategory = DB::table('orders')
+            ->select('productCategory', DB::raw('SUM(total_price) as total'))
+            ->groupBy('productCategory')
+            ->orderBy('total', 'desc')
             ->get();
 
         // Pass all variables to the view
         return view('Admin.Pages.Sales', compact(
-            'totalProducts',
-            'totalInventoryValue',
-            'productsByCategory',
-            'lowStockItems',
-            'totalOrders',
             'monthlySales',
-            'monthlyOrders'
+            // 'monthlyOrders',
+            'salesByCategory'
         ));
-
-
-
         // return view('Admin.Pages.Sales');
     })->name('sales')->middleware(PreventBackHistory::class);
 });
