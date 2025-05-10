@@ -51,7 +51,7 @@
         </li>
 
         <li>
-        <a href="">
+        <a href="{{route('expensesPage')}}">
         <img src="assets/components/expenses.png" alt="">
             <span class="nav-text">Expenses</span>
           </a>
