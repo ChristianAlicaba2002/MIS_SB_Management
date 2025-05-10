@@ -22,7 +22,7 @@ class ExpenseTest extends TestCase
         'category' => 'Essentials'
     ]);
 
-        $response->assertStatus(201);
+            $response->assertStatus(201);
         $this->assertDatabaseHas('expenses', ['name' => 'Rent']);
     }
 
