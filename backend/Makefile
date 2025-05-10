@@ -1,8 +1,8 @@
 .PHONY: install build run test
 
 install:
-	 composer install
-	 npm install
+	composer install
+	npm install
 
 build:
 	copy .env.example .env || echo ".env already exists, skipping copy"
@@ -12,6 +12,19 @@ build:
 
 run:
 	php artisan serve
+
+migrate:
+	php artisan migrate
+
+rollback:
+	php artisan migrate:rollback
+
+fresh:
+	php artisan migrate:fresh
+	php artisan db:seed
+
+seed:
+	php artisan db:seed
 
 test:
 	php artisan migrate:fresh --env=testing
