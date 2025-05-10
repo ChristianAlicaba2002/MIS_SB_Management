@@ -12,9 +12,17 @@
 
 <body>
 
-<aside>
+    <aside>
         @include('Admin.Pages.Sidebar')
     </aside>
+
+    @if(session('success'))
+        <script>alert("{{session('success')}}")</script>
+    @endif
+
+    @if(session('error'))
+        <script>alert("session('error')")</script>
+    @endif
 
     <div class="content-wrapper">
         <div class="title">
@@ -38,37 +46,58 @@
                     <tr>
                         <th>Name</th>
                         <th>Amount</th>
-                        <th>Time</th>
+                        <th>DateTime</th>
                         <th>Category</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
 
+                    @if(count($expenses) > 0)
+                    @foreach($expenses as $expense)
                     <tr>
-                        <td>Lunch</td>
-                        <td>15.50</td>
-                        <td>2025-05-10 12:00</td>
-                        <td>Food</td>
+                        <td>{{ $expense->name }}</td>
+                        <td>&#8369; {{ number_format( $expense->amount , 2)}}</td>
+                        <td>{{ $expense->datetime }}</td>
+                        <td>{{ $expense->category }}</td>
                         <td class="expense-actions">
-                            <a href="#" class="edit-btn"><img src="/images/edit.png" alt="Edit"> Edit</a>
-                            <a href="#" class="archive-btn" alt="Archive"><img src="/images/archive.png" alt="Archive"> Archive</a>
+                            <a href="#" class="edit-btn"
+                                onclick="EditForm('{{ $expense->id }}', '{{ $expense->name }}', '{{ $expense->amount }}', '{{ $expense->datetime }}','{{ $expense->category }}', )">
+                            <img src="/images/edit.png" alt="Edit">Edit
+                            </a>
+                            <form action="/expenses/{{$expense->id}}/archive" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="archive-btn" alt="Archive">
+                                    <img src="/images/archive.png" alt="Archive"> Archive
+                                </button>
+                            </form>
                         </td>
                     </tr>
+                    @endforeach
+                    @else
+                    <tr>
+                        <td colspan="5" style="text-align: center;" class="no-data">No expenses found.</td>
+                    </tr>
+                    @endif
+
+
                 </tbody>
             </table>
         </div>
 
+        <!-- Add Expense Modal -->
         <div id="addExpenseModal">
             <div id="addExpenseForm">
                 <button type="button" class="close-modal-btn" id="closeAddExpenseModal">
                     &times;
                 </button>
                 <h2>Add New Expense</h2>
-                <form action="/create-expense" method="POST">
+                <form action="{{route('add.expense')}}" method="POST">
+                    @csrf
                     <div>
                         <label for="iname">Item Name</label>
-                        <input type="text" id="iname" name="iname" placeholder="Enter Item Name" required>
+                        <input type="text" id="iname" name="name" placeholder="Enter Item Name" required>
                     </div>
                     <div>
                         <label for="amount">Amount</label>
@@ -76,7 +105,7 @@
                     </div>
                     <div>
                         <label for="time">Date/Time</label>
-                        <input type="datetime-local" id="time" name="time">
+                        <input type="datetime-local" id="time" name="datetime">
                     </div>
                     <div>
                         <label for="category">Category</label>
@@ -87,6 +116,38 @@
             </div>
         </div>
 
+
+        <!-- Edit Expense Modal -->
+        <div id="edit_expenses" class="edit_expenses" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center;">
+            <form id="editForm" action="" method="post" style="background: white; padding: 20px; border-radius: 8px; width: 400px;">
+            @csrf
+            @method('PUT')
+            <div style="margin-bottom: 15px;">
+                <label for="iname" style="display: block; margin-bottom: 5px;">Item Name</label>
+                <input type="text" id="editName" name="name" placeholder="Enter Item Name" required 
+                   style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="amount" style="display: block; margin-bottom: 5px;">Amount</label>
+                <input type="number" id="editAmount" name="amount" placeholder="Enter Amount" required
+                   style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="time" style="display: block; margin-bottom: 5px;">Date/Time</label>
+                <input type="datetime-local" id="EditDatetime" name="datetime"
+                   style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="category" style="display: block; margin-bottom: 5px;">Category</label>
+                <input type="text" id="editCategory" name="category" placeholder="Enter Category"
+                   style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <button type="submit" style="width: 100%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                Update Expense
+            </button>
+            </form>
+        </div>
+
         <div class="no-expenses" style="display:none;">
             <div>
                 <h2>No Expenses Found</h2>
@@ -95,6 +156,21 @@
         </div>
 
         <script>
+            // JavaScript to handle modal opening and closing
+            function EditForm(id, name, amount, datetime, category) {
+                document.getElementById('edit_expenses').style.display = 'flex';
+                document.getElementById('editForm').action = `/expenses/update/${id}`;
+                document.getElementById('editName').value = name;
+                document.getElementById('editAmount').value = amount;
+                document.getElementById('EditDatetime').value = datetime;
+                document.getElementById('editCategory').value = category;
+            }
+            document.getElementById('edit_expenses').addEventListener('click', function(event) {
+                if (event.target === this) {
+                    this.style.display = 'none';
+                }
+            });
+
             document.addEventListener('DOMContentLoaded', function() {
                 const openAddExpenseModalBtn = document.getElementById('openAddExpenseModal');
                 const addExpenseModal = document.getElementById('addExpenseModal');

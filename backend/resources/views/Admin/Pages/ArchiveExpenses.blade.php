@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="css/archiveexpenses.css">
     <link rel="shortcut icon" href="/images/oop_logo.png" type="image/x-icon">
 </head>
+
 <body>
 
     <div class="back">
@@ -31,40 +33,43 @@
                 </tr>
             </thead>
             <tbody>
+                @if(count($archive_expenses) > 0)
+                @foreach($archive_expenses as $expense)
                 <tr>
-                    <td>Expense 1</td>
-                    <td>10.00</td>
-                    <td>2024-07-28 12:00</td>
-                    <td>Food</td>
+                    <td>{{ $expense->name }}</td>
+                    <td>{{ $expense->amount }}</td>
+                    <td>{{ $expense->datetime }}</td>
+                    <td>{{ $expense->category }}</td>
                     <td class="action-btn">
-                        <button class="restore">
-                            <img src="/images/restore.png" alt="Restore">
-                            Restore
-                        </button>
-                        <button class="delete">
-                            <img src="/images/delete.png" alt="Delete">
-                            Delete
-                        </button>
+                        <form action="/expenses/{{ $expense->id}}/restore" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button class="restore">
+                                <img src="/images/restore.png" alt="Restore">
+                                Restore
+                            </button>
+                        </form>
+
+                        <form action="/expenses/{{ $expense->id}}/delete" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button class="delete">
+                                <img src="/images/delete.png" alt="Delete">
+                                Delete
+                            </button>
+                        </form>
+
                     </td>
                 </tr>
+                @endforeach
+                @else
                 <tr>
-                    <td>Expense 2</td>
-                    <td>25.00</td>
-                    <td>2024-07-27 15:30</td>
-                    <td>Transportation</td>
-                    <td class="action-btn">
-                        <button class="restore">
-                            <img src="/images/restore.png" alt="Restore">
-                            Restore
-                        </button>
-                        <button class="delete">
-                            <img src="/images/delete.png" alt="Delete">
-                            Delete
-                        </button>
-                    </td>
+                    <td colspan="5" style="text-align: center;" class="no-data">No archived expenses found.</td>
                 </tr>
+                @endif
             </tbody>
         </table>
     </div>
 </body>
+
 </html>
