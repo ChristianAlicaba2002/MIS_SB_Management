@@ -92,6 +92,7 @@ Route::middleware(['auth:admin'])->group(function () {
 
             ]);
         }
+
     )->name('receipt')->middleware(PreventBackHistory::class);
     Route::get('/inventory', function () {
         $inventories = DB::table('inventories')->get();
@@ -135,6 +136,13 @@ Route::middleware(['auth:admin'])->group(function () {
         ));
         // return view('Admin.Pages.Sales');
     })->name('sales')->middleware(PreventBackHistory::class);
+
+    Route::get('/expensesPage', function () {
+        return view('Admin.Pages.Expenses'); 
+    })->name('expensesPage')->middleware(PreventBackHistory::class);
+    Route::get('/expensesArchive', function () {
+        return view('Admin.Pages.ArchiveExpenses'); 
+    })->name('expensesArchive')->middleware(PreventBackHistory::class);
 });
 
 
@@ -166,3 +174,4 @@ Route::put('/updateinventory/{id}', [InventoryController::class, 'UpdateInventor
 Route::delete('/archiveinventory/{id}', [InventoryController::class, 'ArchiveInventory'])->name('archive.inventory');
 Route::delete('/restoreinventory/{id}', [InventoryController::class, 'RestoreInventory'])->name('restore.inventory');
 Route::delete('/deleteinventory/{id}', [InventoryController::class, 'DeleteInventory'])->name('delete.inventory');
+
