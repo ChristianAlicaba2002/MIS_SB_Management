@@ -9,12 +9,16 @@
 </head>
 
 <body>
+    <div id="loader" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
 
     <form class="form-controller" action="{{route('login.admin')}}" method="post">
         @csrf
         <h1>MIS&SB</h1>
         @if(session('error'))
-            <span>{{ session('error') }}</span>
+        <span>{{ session('error') }}</span>
         @endif
         <label for="">Admin</label>
         <input type="text" placeholder="Admin" name="name" id="username" required>
