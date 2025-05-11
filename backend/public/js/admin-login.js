@@ -10,3 +10,7 @@ function ShowPassword() {
         showpassword.classList.remove('show');
     }
 }
+
+document.querySelector('.form-controller').addEventListener('submit', function () {
+    document.getElementById('loader').style.display = 'flex';
+});

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('expenses', function (Blueprint $table) {
+        Schema::create('archive_expenses', function (Blueprint $table) {
             $table->id();
+            $table->integer('expense_id')->constrained('id')->onDelete('cascade');
             $table->string('name');
             $table->decimal('amount', 10, 2);
             $table->dateTime('datetime');
             $table->string('category');
-            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('expenses');
+        Schema::dropIfExists('archive_expenses');
     }
 };

@@ -1,8 +1,8 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 body {
@@ -20,7 +20,6 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
-
 }
 
 .brandName h1 {
@@ -40,7 +39,7 @@ body {
     gap: 15px;
 }
 .btn {
-    margin: .5rem;
+    margin: 0.5rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -56,86 +55,92 @@ body {
     color: #ff8297;
     white-space: nowrap;
     text-decoration: none;
-  }
+}
 
-  .btn img {
+.btn img {
     width: 28px;
     height: 28px;
-  }
+}
 
-  .btn:hover {
+.btn:hover {
     border: 1px solid #ff8297;
-    background:linear-gradient(to right, #ff5e78, #ff6ec7);
+    background: linear-gradient(to right, #ff5e78, #ff6ec7);
     color: white;
     transform: scale(1.05);
-  }
+}
 
-        .expensesTableContainer {
-            width: 100%;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            overflow-x: auto;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+.expensesTableContainer {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow-x: auto;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-        .expensesTable {
-            width: 100%;
-            border-collapse: collapse;
-        }
+.expensesTable {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-        .expensesTable thead {
-            background-color: #ff889c;
-            color: #fff;
-        }
+.expensesTable thead {
+    background-color: #ff889c;
+    color: #fff;
+}
 
-        .expensesTable th,
-        .expensesTable td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-            font-size: 0.95em;
-        }
+.expensesTable th,
+.expensesTable td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95em;
+}
 
-        .expensesTable th {
-            font-weight: bold;
-        }
+.expensesTable th {
+    font-weight: bold;
+}
 
-        .expensesTable tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+.expensesTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
 
-        .expense-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
+.expense-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
 
-        .expense-actions a {
-            background: none;
-            border: none;
-            padding: 8px;
-            cursor: pointer;
-            transition: color 0.3s ease, transform 0.3s ease;
-            text-decoration: none;
-            color: #ff889c;
-            font-size: 1em;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .expense-actions img{
-            width: 30px;
-            height: 30px;
-        }
-        .expense-actions a:hover{
-            color: #ff889c;
-            transform: scale(1.05);
-        }
+.expense-actions a , button {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
+    color: #ff889c;
+    font-size: 1em;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
 
 
-        #addExpenseModal {
+.no-data{
+    padding: 30px;
+    font-size: 1.1em;
+    color: #777;
+}
+
+.expense-actions img {
+    width: 30px;
+    height: 30px;
+}
+.expense-actions a:hover {
+    color: #ff889c;
+    transform: scale(1.05);
+}
+
+#addExpenseModal {
     display: none;
     position: fixed;
     top: 0;
@@ -145,7 +150,6 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-
 }
 
 #addExpenseForm {
@@ -214,32 +218,32 @@ body {
     transform: scale(1.02);
     color: white;
 }
-        .close-modal-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.5em;
-            color: #555;
-            transition: color 0.3s ease;
-        }
+.close-modal-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em;
+    color: #555;
+    transition: color 0.3s ease;
+}
 
-        .close-modal-btn:hover {
-            color: #ff889c;
-        }
+.close-modal-btn:hover {
+    color: #ff889c;
+}
 
-        .no-expenses {
-            text-align: center;
-            padding: 30px;
-            font-size: 1.1em;
-            color: #777;
-        }
+.no-expenses {
+    text-align: center;
+    padding: 30px;
+    font-size: 1.1em;
+    color: #777;
+}
 
-        @media (max-width: 1024px) {
-            .content-wrapper {
-                margin-left: 0;
-                width: 100%;
-            }
-        }
+@media (max-width: 1024px) {
+    .content-wrapper {
+        margin-left: 0;
+        width: 100%;
+    }
+}
