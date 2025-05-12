@@ -148,9 +148,9 @@
         <div class="card">
           <div class="card-title">Order Received</div>
           <div class="stat-container">
-            <div><div class="stat-value">₱{{ $orderReceived }}</div></div>
-            <div class="{{ $todayOrders >= 0 ? 'trend-up' : 'trend-down' }}">
-              {{ $todayOrders >= 0 ? '+' : '' }}{{ number_format($todayOrders, 1) }}% {{ $todayOrders >= 0 ? '↑' : '↓' }}
+            <div><div class="stat-value">₱1232</div></div>
+            <div >
+            
             </div>
           </div>
           <div class="chart-container"><canvas id="orderChart"></canvas></div>
@@ -159,9 +159,9 @@
         <div class="card">
           <div class="card-title">Sales Summary</div>
           <div class="stat-container">
-            <div><div class="stat-value">₱{{ $totalSales }}</div></div>
-            <div class="{{ $todaySales >= 0 ? 'trend-up' : 'trend-down' }}">
-              {{ $todaySales >= 0 ? '+' : '' }}{{ number_format($todaySales, 1) }}% {{ $todaySales >= 0 ? '↑' : '↓' }}
+            <div><div class="stat-value">₱1232</div></div>
+            <div class="">
+             
             </div>
           </div>
           <div class="chart-container"><canvas id="salesChart"></canvas></div>
@@ -176,14 +176,15 @@
   </div>
 
   <script>
-    // ORDER CHARS
+    // ORDER CHARS// Add this line in your controller to pass monthly orders
+
     const orderChart = new Chart(document.getElementById('orderChart'), {
       type: 'line',
       data: {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
         datasets: [{
           label: 'Orders',
-          data: {{$todayOrders}},
+          data: [123,192,123,183,340], // Use the passed data from controller
           backgroundColor: 'rgba(255, 94, 120, 0.1)',
           borderColor: '#ff5e78',
           borderWidth: 2,
@@ -209,7 +210,7 @@
             displayColors: false,
             callbacks: {
               label: function(context) {
-                return '₱' + context.parsed.y;
+                return '₱' + context.parsed.y.toLocaleString();
               }
             }
           }
@@ -226,7 +227,7 @@
               font: { family: 'Poppins', size: 11 },
               color: '#777',
               callback: function(value) {
-                return '₱' + value;
+                return '₱' + value.toLocaleString();
               }
             }
           },
@@ -249,7 +250,7 @@
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
         datasets: [{
           label: 'Revenue',
-          data: {{ $salesSummary }},
+          data: [123, 456, 789, 101, 112, 131], // Use the passed data from controller
           backgroundColor: function(context) {
             const chart = context.chart;
             const { ctx, chartArea } = chart;
@@ -314,7 +315,7 @@
         labels: ['Ice Scramble', 'Shakes', 'Drinks', 'Snack Bites'],
         datasets: [{
           label: 'Sold',
-          data: {{ $bestSellers }},
+          data: [123,123,342,545], // Use the passed data from controller
           backgroundColor: ['#ff5e78', '#ffc0cb', '#ffa6c1', '#ff8da1'],
           borderRadius: 6,
           barThickness: 25
