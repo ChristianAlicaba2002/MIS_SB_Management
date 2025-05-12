@@ -129,9 +129,6 @@
                 </div>
 
                 <div class="product-actions">
-                    <a href="{{route('receipt')}}">
-                        <button class="action-btn edit-btn">Receipt</button>
-                    </a>
                     <button class="action-btn delete-btn">Delete</button>
                     <a href="/receipt/{{$order->ordercode}}/{{$order->productID}}/{{$order->productName}}/{{$order->productCategory}}/{{$order->productPrice}}/{{$order->productDate}}/{{$order->quantity}}/{{ $order->total_price }}">
                         <button class="action-btn edit-btn">Receipt</button>
